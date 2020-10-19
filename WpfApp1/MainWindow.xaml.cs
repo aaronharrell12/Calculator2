@@ -57,14 +57,12 @@ namespace WpfApp1
         private void Numbers_Clicked(object sender, RoutedEventArgs e)
         {
 
-            Console.Out.WriteLine("ldkkjf");
-            Trace.WriteLine("dafeaf");
-            Debug.Write("dkaljfopawiejefkao akdjfopjawpeo");
             Button x = (Button) sender;
+            // Grabs the window text
             String textIn = textBlock.Text;
-
+            // Append text (number) to window text
             textIn += (String)x.Content;
-
+            // Sets 
             textBlock.Text = textIn;
 
         }
@@ -124,6 +122,21 @@ namespace WpfApp1
 
 
 
+
+        }
+
+        private void Number_8_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Number_5_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Number_9_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

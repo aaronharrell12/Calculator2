@@ -17,3 +17,10 @@ C:\Users\Bussiness\source\repos\WpfApp1\WpfApp1\obj\Debug\WpfApp1.exe.manifest
 C:\Users\Bussiness\source\repos\WpfApp1\WpfApp1\obj\Debug\WpfApp1.application
 C:\Users\Bussiness\source\repos\WpfApp1\WpfApp1\obj\Debug\WpfApp1.exe
 C:\Users\Bussiness\source\repos\WpfApp1\WpfApp1\obj\Debug\WpfApp1.pdb
+C:\Users\Bussiness\source\repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\WpfApp1.csprojAssemblyReference.cache
+C:\Users\Bussiness\source\repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\MainWindow.g.cs
+C:\Users\Bussiness\source\repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\App.g.cs
+C:\Users\Bussiness\source\repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\WpfApp1_MarkupCompile.cache
+C:\Users\Bussiness\source\repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\WpfApp1_MarkupCompile.lref
+C:\Users\Bussiness\source\repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\WpfApp1.exe
+C:\Users\Bussiness\source\repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\WpfApp1.pdb

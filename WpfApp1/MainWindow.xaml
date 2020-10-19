@@ -22,19 +22,19 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
-                
+
             </Grid.RowDefinitions>
             <Button x:Name="Number_1"       Content="1"     Grid.Row="0" Grid.Column="0"  />
             <Button x:Name="Number_2"       Content="2"     Grid.Row="1" Grid.Column="0" />
             <Button x:Name="Number_3"       Content="3"     Grid.Row="2" Grid.Column="0" />
             <Button x:Name="Operation_dec"  Content="."     Grid.Row="3" Grid.Column="0" Click="Operation_dec_Click" />
             <Button x:Name="Number_4"       Content="4"     Grid.Row="0" Grid.Column="1" />
-            <Button x:Name="Number_5"       Content="5"     Grid.Row="1" Grid.Column="1" />
+            <Button x:Name="Number_5"       Content="5"     Grid.Row="1" Grid.Column="1" Click="Number_5_Click" />
             <Button x:Name="Number_6"       Content="6"     Grid.Row="2" Grid.Column="1" />
             <Button x:Name="Number_0"       Content="0"     Grid.Row="3" Grid.Column="1" />
             <Button x:Name="Number_7"       Content="7"     Grid.Row="0" Grid.Column="2" />
-            <Button x:Name="Number_8"       Content="8"     Grid.Row="1" Grid.Column="2" />
-            <Button x:Name="Number_9"       Content="9"     Grid.Row="2" Grid.Column="2" />
+            <Button x:Name="Number_8"       Content="8"     Grid.Row="1" Grid.Column="2" Click="Number_8_Click" />
+            <Button x:Name="Number_9"       Content="f"     Grid.Row="2" Grid.Column="2" Click="Number_9_Click" />
             <Button x:Name="Operation_Result_eql"  Content="="     Grid.Row="3" Grid.Column="2" Click="Operation_Result_eql_Click" />
             <Button x:Name="Operation_Bin_add"  Content="+"     Grid.Row="0" Grid.Column="3" Click="Operation_add_Click" />
             <Button x:Name="Operation_Bin_sub"  Content="-"     Grid.Row="1" Grid.Column="3" Click="Operation_Bin_sub_Click" />
@@ -44,6 +44,26 @@
         <TextBlock x:Name="textBlock" Canvas.Left="196" TextWrapping="Wrap" Canvas.Top="108" Width="300" Height="72" Background="#FFCDC6C6" FontSize="22" TextAlignment="Center" OpacityMask="#FFE0D0D0" Foreground="Black"><InlineUIContainer>
                 <Border BorderBrush="Black" BorderThickness="1" Height="72" Width="300"/>
             </InlineUIContainer></TextBlock>
+        <Grid Height="100" Canvas.Left="36" Canvas.Top="300" Width="100">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+
+            </Grid.RowDefinitions>
+        </Grid>
+              
+              
+  
 
 
 
