@@ -9,8 +9,8 @@
 
     <Grid Name="canvas" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="247*"/>
+            <ColumnDefinition Width="472*"/>
         </Grid.ColumnDefinitions>
 
 
@@ -19,11 +19,11 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
-            
-            
+
+
             <TextBlock x:Name="textBlock" Canvas.Left="196" TextWrapping="Wrap" Canvas.Top="108" Grid.Row="0" Grid.ColumnSpan="5" Background="#FFCDC6C6" FontSize="22" TextAlignment="Center" OpacityMask="#FFE0D0D0" Foreground="Black"><InlineUIContainer>
                 <Border BorderBrush="Black" BorderThickness="1" />
-            </InlineUIContainer>
+                </InlineUIContainer>
             </TextBlock>
 
 
@@ -69,7 +69,8 @@
 
 
         </Grid>
-           
+
+        <!-- Testing -->
         <Grid Name ="Testing2" Grid.Row="0" Grid.Column="0">
 
             <Grid.RowDefinitions>
@@ -92,7 +93,7 @@
             <Label x:Name="label3" Content="Temp val"  RenderTransformOrigin="0.348,-0.16" Grid.Row="6" Grid.Column="0"/>
             <TextBox x:Name="temp_box"   TextWrapping="Wrap" Text="Temp Val "  Grid.Row="7" Grid.Column="0" />
         </Grid>
-        </Grid>
+    </Grid>
 
 
 
