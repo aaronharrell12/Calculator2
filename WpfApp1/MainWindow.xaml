@@ -4,77 +4,588 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
+        Name="window"
         mc:Ignorable="d"
-        Title="MainWindow" Height="602" Width="727" BorderBrush="White" Foreground="White" Background="White">
+        Title="MainWindow" Height="575" Width="408" BorderBrush="White" Foreground="White" Background="White">
 
-    <Grid Name="canvas" >
+    <!-- Style -->
+    <Window.Resources>
+
+        <!--Buttons-->
+        <Style TargetType="Button" x:Key="but_style">
+            <Setter Property="BorderBrush"      Value="Transparent"                   />
+            <Setter Property="FontFamily"       Value="Fonts/Roboto-Light.ttf #Roboto"  />
+            <Setter Property="FontSize"         Value="15"                              />
+            <!--Setter Property="FontWeight"       Value="Bold"                         /-->
+        </Style>
+
+        <!--Text Block-->
+        <Style TargetType="TextBlock" x:Key="txtblk_style">
+            <Setter Property="FontFamily"       Value="Fonts/Roboto-Light.ttf #Roboto" />
+            <Setter Property="FontSize"         Value="40"                             />
+            <Setter Property="FontWeight"       Value="Bold"                           />
+            <Setter Property="TextAlignment"    Value="Right"                          />
+            <Setter Property="OpacityMask"      Value="#FFE0D0D0"                    />
+            <Setter Property="Foreground"       Value="Black"                        />
+            <Setter Property="FontWeight"       Value="Bold"                           />
+        </Style>
+
+        <!-- Navigation Panel Buttons-->
+        <Style TargetType="Button" x:Key="NavButton_style">
+            <Setter Property="Foreground"       Value="White"                         />
+            <Setter Property="FontSize"         Value="18"                              />
+            <Setter Property="FontWeight"       Value="Bold"                            />
+            <Setter Property="FontFamily"       Value="Mongolian Baiti"                 />
+            <Setter Property="Background"       Value="{x:Null}"                        />
+            <Setter Property="BorderBrush"      Value="{x:Null}"                        />
+        </Style>
+
+    </Window.Resources>
+
+    <!-- Windows -->
+    <Grid Name="canvas" Background="#7F000000" >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="247*"/>
-            <ColumnDefinition Width="472*"/>
+            <ColumnDefinition Width="127*"/>
+            <ColumnDefinition Width="273*"/>
         </Grid.ColumnDefinitions>
 
+        <!-- Second Background -->
+        <Grid Background="#7F000000" Grid.ColumnSpan="2">
 
-        <Grid Name="Calculator" Grid.Column="1">
+        </Grid>
+
+        <!-- Top Panel -->
+        <Grid Name="Top" 
+                  Grid.Row="0"
+                  VerticalAlignment="Top"
+                  Height="40" Grid.ColumnSpan="2"
+                  >
+
+            <!--Grid Columns-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--Menu Text-->
+            <TextBox     Grid.Column="1" 
+                         Background="{x:Null}" 
+                         BorderBrush="{x:Null}" 
+                         Height="44" 
+                         VerticalAlignment="Top" 
+                         Text="Menu" 
+                         FontSize="24" 
+                         FontFamily="Corbel" 
+                         FontWeight="Thin" 
+                         IsReadOnly="True" 
+                         Foreground="White" 
+                         Margin="0,0,0,-8" 
+                         />
+
+            <!-- Menu Toggle Button Background -->
+            <Grid Grid.RowSpan="2" VerticalAlignment="Top">
+                <Image x:Name="Tg_Btn_image_1"
+                       Height="40"
+                       Width ="40"
+                       Source="Bars 1.png"            
+                       Opacity="1"
+                       />
+                <Image x:Name="Tg_Btn_image_2"
+                       Height="40"
+                       Width ="40"
+                       Source="Bars 2.png"
+                       Opacity="0"
+                       />
+                <Image x:Name="Tg_Btn_image_3"
+                       Height="40"
+                       Width ="40"
+                       Source="Bars 3.png"
+                       Opacity="0"
+                       />
+                <Image x:Name="Tg_Btn_image_4"
+                       Height="40"
+                       Width ="40"
+                       Source="Bars 4.png"
+                       Opacity="0"
+                       />
+                <Image x:Name="Tg_Btn_image_5"
+                       Height="40"
+                       Width ="40"
+                       Source="Bars 5.png"
+                       Opacity="0"
+                       />
+                <Image x:Name="Tg_Btn_image_6"
+                       Height="40"
+                       Width ="40"
+                       Source="Bars 6.png"
+                       Opacity="0"
+                       />
+                <Image x:Name="Tg_Btn_image_7"
+                       Height="40"
+                       Width ="40"
+                       Source="Bars 7.png"
+                       Opacity="0"
+                       />
+            </Grid>
+
+            <!-- Menu Toggle Button -->
+            <ToggleButton x:Name="Tg_Btn" 
+                          Height="40"
+                          Width ="40"
+                          VerticalAlignment="Top"
+                          HorizontalAlignment="Left"
+                          Unchecked="nothing"
+                          Checked="nothing"
+                          Margin="0,0,0,-4"  
+                          Opacity="0"
+                          >
+
+                <!-- Button Style  -->
+                <ToggleButton.Style>
+
+                    <!--(Essentially Gets rid of blue highlight when checked)-->
+                    <Style TargetType="{x:Type ToggleButton}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                    <Border BorderBrush="{TemplateBinding BorderBrush}" 
+                                Background="{TemplateBinding Background}">
+                                        <ContentPresenter HorizontalAlignment="Center"                  
+                                              VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="Red" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+
+                </ToggleButton.Style>
+
+                <!-- Button Animations -->
+                <ToggleButton.Triggers>
+
+                    <!-- Open the menu -->
+                    <EventTrigger RoutedEvent="ToggleButton.Checked">
+                        <BeginStoryboard>
+                            <Storyboard x:Name="Hidepanel">
+                                <!-- Expand Window -->
+                                <DoubleAnimation
+                                    
+                                        Storyboard.TargetName="window"
+                                        Storyboard.TargetProperty="Width"
+                                        BeginTime="0:0:0"
+                                        AccelerationRatio="0.4"
+                                        From="420" To="520"
+                                        Duration="0:0:0.17"/>
+
+                                <!-- Expand -->
+                                <DoubleAnimation
+                                    
+                                        Storyboard.TargetName="nav_pan"
+                                        Storyboard.TargetProperty="Width"
+                                        BeginTime="0:0:0"
+                                        AccelerationRatio="0.4"
+                                        From="0" To="100"
+                                        Duration="0:0:0.17"/>
+
+                                <!-- Navigational Panel -->
+                                <DoubleAnimation
+                                        Storyboard.TargetName="nav_pan"
+                                        Storyboard.TargetProperty="Opacity"
+                                        BeginTime="0:0:0"
+                                        AccelerationRatio="0.4"
+                                        From="0" To="1"
+                                        Duration="0:0:.17"/>
+
+
+                                <!--# BACKGROUND IMAGE SLIDESHOW START -->
+
+                                <!--Image 1-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_1"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:0.05">
+
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.05"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 2-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_2"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:0.07">
+
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.05"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.06"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.06"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.07"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 3-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_3"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:0.09">
+
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.07"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.08"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.08"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.09"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 4-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_4"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:0.12">
+
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.09"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.10"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.11"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.12"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 5 -->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_6"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:.14">
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.12"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.13"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.13"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.14"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 6-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_6"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:.16">
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.14"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.15"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.15"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.16"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 7-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_7"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:0.17">
+
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.16"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.17"/>
+                                </DoubleAnimationUsingKeyFrames>
+
+                                <!--# BACKGROUND IMAGE SLIDESHOW END -->
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+
+                    <!-- Close the menu -->
+                    <EventTrigger RoutedEvent="ToggleButton.Unchecked">
+                        <BeginStoryboard>
+                            <Storyboard x:Name="Show">
+
+
+                                <!-- Shorten the width of the window -->
+                                <DoubleAnimation
+                                    
+                                        Storyboard.TargetName="window"
+                                        Storyboard.TargetProperty="Width"
+                                        BeginTime="0:0:0"
+                                        AccelerationRatio="0.4"
+                                        From="520" To="420"
+                                        Duration="0:0:0.17"/>
+
+                                <!-- Shorten the width of the navigational panel -->
+                                <DoubleAnimation
+                                        Storyboard.TargetName="nav_pan"
+                                        Storyboard.TargetProperty="Width"
+                                        BeginTime="0:0:0"
+                                        AccelerationRatio="0.4"
+                                        From="100" To="0"
+                                        Duration="0:0:0.17"/>
+
+                                <!-- Change opacity of navigational panel -->
+                                <DoubleAnimation
+                                        Storyboard.TargetName="nav_pan"
+                                        Storyboard.TargetProperty="Opacity"
+                                        BeginTime="0:0:0"
+                                        AccelerationRatio="0.4"
+                                        From="1" To="0"
+                                        Duration="0:0:0.17"/>
+
+
+                                <!--# BACKGROUND IMAGE SLIDESHOW START -->
+
+                                <!--Image 7-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_7"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:0.05">
+
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.05"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 6-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_6"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:0.07">
+
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.05"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.06"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.06"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.07"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 5-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_5"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:0.09">
+
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.07"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.08"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.08"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.09"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 4-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_4"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:0.12">
+
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.09"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.10"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.11"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.12"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 3 -->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_3"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:.14">
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.12"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.13"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.13"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.14"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 2-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_2"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:.16">
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.14"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.15"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.15"/>
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.16"/>
+                                </DoubleAnimationUsingKeyFrames>
+                                <!--Image 1-->
+                                <DoubleAnimationUsingKeyFrames
+                                                    Storyboard.TargetName="Tg_Btn_image_1"
+                                                    Storyboard.TargetProperty="Opacity"
+                                                    Duration="0:0:0.17">
+
+                                    <LinearDoubleKeyFrame Value="0" KeyTime="0:0:0.16"/>
+                                    <LinearDoubleKeyFrame Value="1" KeyTime="0:0:0.17"/>
+                                </DoubleAnimationUsingKeyFrames>
+
+                                <!--# BACKGROUND IMAGE SLIDESHOW END -->
+
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+
+                </ToggleButton.Triggers>
+
+            </ToggleButton>
+
+        </Grid>
+
+        <!-- The Calculator -->
+        <Grid x:Name="Calculator" 
+              HorizontalAlignment="Right"
+              Width="400"
+              ShowGridLines="False" Grid.ColumnSpan="2"
+              >
+
+            <!-- Grid Row-->
             <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="3"/>
                 <RowDefinition Height="1*"/>
-                <RowDefinition Height="10*"/>
+                <RowDefinition Height="3"/>
+                <RowDefinition Height="5*"/>
             </Grid.RowDefinitions>
 
+            <!-- The textbox-->
+            <Grid Grid.Row="2" ShowGridLines="False" Background="White">
 
-            <TextBlock x:Name="textBlock" Canvas.Left="196" TextWrapping="Wrap" Canvas.Top="108" Grid.Row="0" Grid.ColumnSpan="5" Background="#FFCDC6C6" FontSize="22" TextAlignment="Center" OpacityMask="#FFE0D0D0" Foreground="Black"><InlineUIContainer>
-                <Border BorderBrush="Black" BorderThickness="1" />
-                </InlineUIContainer>
-            </TextBlock>
+                <!-- Grid Rows -->
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
 
+                <!-- ABOVE: History Window -->
+                <TextBlock x:Name="History_win" 
+                           Canvas.Left   = "196"
+                           Canvas.Top    = "108"
+                           Grid.Row      = "0"  
+                           Style="{StaticResource txtblk_style}">
+                      
+                        <InlineUIContainer>
+                       
+                        </InlineUIContainer>
+                </TextBlock>
 
-            <Grid Name="grid"   Grid.Row="1" Grid.Column="1" >
+                <!--BELOW: Box for Number-->
+                <TextBlock x:Name="container_num"
+                           Canvas.Left   = "196"
+                           Canvas.Top    = "108"
+                           Grid.Row      = "1"  
+                           Style="{StaticResource txtblk_style}"
+                           Text="0"
+                     />
 
+            </Grid>
+
+            <!-- NUMBERS AND OPERATION GRID -->
+            <Grid x:Name="grid"   
+                   Grid.Row="4" 
+                   Grid.Column="1" >
+
+                <!--Grid Columns-->
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="79*"/>
+                    <ColumnDefinition Width="79*"/>
+                    <ColumnDefinition Width="79*"/>
+                    <ColumnDefinition Width="78" />
+                    <ColumnDefinition Width="78*"/>
                 </Grid.ColumnDefinitions>
 
+                <!--Grid Rows-->
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
-
-
                 </Grid.RowDefinitions>
-                <Button x:Name="Number_1"       Content="1"     Grid.Row="2" Grid.Column="0"  />
-                <Button x:Name="Number_2"       Content="2"     Grid.Row="2" Grid.Column="1" />
-                <Button x:Name="Number_3"       Content="3"     Grid.Row="2" Grid.Column="2" />
-                <Button x:Name="Operation_dec"  Content="."     Grid.Row="3" Grid.Column="0"  />
-                <Button x:Name="Number_4"       Content="4"     Grid.Row="1" Grid.Column="0" />
-                <Button x:Name="Number_5"       Content="5"     Grid.Row="1" Grid.Column="1" />
-                <Button x:Name="Number_6"       Content="6"     Grid.Row="1" Grid.Column="2" />
-                <Button x:Name="Number_0"       Content="0"     Grid.Row="3" Grid.Column="1" />
-                <Button x:Name="Number_7"       Content="7"     Grid.Row="0" Grid.Column="0" />
-                <Button x:Name="Number_8"       Content="8"     Grid.Row="0" Grid.Column="1" />
-                <Button x:Name="Number_9"       Content="9"     Grid.Row="0" Grid.Column="2" />
-                <Button x:Name="Operation_Result_eql"  Content="="     Grid.Row="3" Grid.Column="2"  />
-                <Button x:Name="Operation_Bin_add"  Content="+"     Grid.Row="0" Grid.Column="3"  />
-                <Button x:Name="Operation_Bin_sub"  Content="-"     Grid.Row="1" Grid.Column="3"  />
-                <Button x:Name="Operation_Bin_mul"  Content="*"     Grid.Row="2" Grid.Column="3" Click="Operation_Bin_mul_Click"  />
-                <Button x:Name="Operation_Bin_div"  Content="/"     Grid.Row="3" Grid.Column="3"  />
-                <Button x:Name="Operation_Bin_del"  Content="del"     Grid.Row="0" Grid.Column="4"  />
-                <Button x:Name="Operation_clr"  Content="clr"     Grid.Row="1" Grid.Column="4"  />
+
+                <!--Grid Objects-->
+                <Button x:Name="Number_1"               Content="1"         Grid.Row="2" Grid.Column="0" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_2"               Content="2"         Grid.Row="2" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_3"               Content="3"         Grid.Row="2" Grid.Column="2" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_dec"          Content="."         Grid.Row="3" Grid.Column="0" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_4"               Content="4"         Grid.Row="1" Grid.Column="0" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_5"               Content="5"         Grid.Row="1" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_6"               Content="6"         Grid.Row="1" Grid.Column="2" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_0"               Content="0"         Grid.Row="3" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_7"               Content="7"         Grid.Row="0" Grid.Column="0" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_8"               Content="8"         Grid.Row="0" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_9"               Content="9"         Grid.Row="0" Grid.Column="2" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Result_eql"   Content="="         Grid.Row="3" Grid.Column="2" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_add"      Content="+"         Grid.Row="0" Grid.Column="3" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_sub"      Content="-"         Grid.Row="1" Grid.Column="3" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_mul"      Content="*"         Grid.Row="2" Grid.Column="3" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_div"      Content="/"         Grid.Row="3" Grid.Column="3" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_del"      Content="del"       Grid.Row="0" Grid.Column="4" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_clr"          Content="clr"       Grid.Row="1" Grid.Column="4" Style="{StaticResource but_style}" />
 
             </Grid>
 
+        </Grid>
+
+        <!-- Graphing -->
+        <Grid x:Name="Graphing" 
+              Opacity="1"
+              HorizontalAlignment="Right"
+              Width="400"
+              Visibility="Hidden" Grid.ColumnSpan="2">
+
+            <!-- Grid Row-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+
+            <Canvas Background="White">
+                <Line X1="200" X2="200" Y1="0"   Y2="365" Fill="Black" Stroke="Black"/>
+                <Line X1="0"   X2="400" Y1="170" Y2="170" Fill="Black" Stroke="Black"/>
+                <Line X1="200" X2="201" Y1="170" Y2="172" Fill="Black" Stroke="Black"/>
+                <Line X1="201" X2="205" Y1="172" Y2="175" Fill="Black" Stroke="Black"/>
+            </Canvas>
+            <Grid Grid.Row="1" 
+                  >
+                <TextBox  >
+                    y=[sin]( [3*] (x) [+2] [+] [log](x) )
+                    
+                    [ Math.sin(
+                    , 3
+                    , + 
+                    , Math.log( 
+                    , x  
+                    , ) 
+                    , )
+                    ]
+
+
+
+                </TextBox>
+
+
+
+
+
+            </Grid>
+        </Grid>
+
+        <!-- Navigation Panel -->
+        <Grid x:Name               = "nav_pan"  
+              HorizontalAlignment  = "Left"
+              VerticalAlignment    = "Bottom"
+              Width                = "0"   
+              Height               = "500"
+              Opacity              = "0"
+       >
+
+
+
+            <StackPanel  >
+                <Button x:Name="Setting"                         Content="Settings"     Height="30" Style="{StaticResource NavButton_style}"     />
+                <Button x:Name="Operation_Exponential"           Content="^"            Height="10" Style="{StaticResource NavButton_style}"     />
+                <Button x:Name="Operation_Log"                   Content="log"          Height="10" Style="{StaticResource NavButton_style}"     />
+            </StackPanel>
 
 
         </Grid>
 
-        <!-- Testing -->
-        <Grid Name ="Testing2" Grid.Row="0" Grid.Column="0">
 
+
+
+
+    </Grid>
+
+</Window>
+
+
+<!--Color #4A5668-->
+
+
+<!-- Toggle Button (Open panel )-->
+
+
+<!-- Navigation Panel -->
+
+
+<!--Grid Name ="Testing2" Grid.Row="0" Grid.Column="0">
+        
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="12*"/>
+            </Grid.ColumnDefinitions>
+        
             <Grid.RowDefinitions>
-
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -84,25 +595,19 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
-            <Label x:Name="label" Content="Current Value"  Grid.Row="0" Grid.Column="0"/>
-            <TextBox x:Name="curr_val_box"  TextWrapping="Wrap" Text="current Val" Grid.Row="1" Grid.Column="0"/>
-            <Label x:Name="label1" Content="New Value"  Grid.Row="2" Grid.Column="0"/>
-            <TextBox x:Name="new_val_box" TextWrapping="Wrap" Text="New Val"   Grid.Row="3" Grid.Column="0"/>
-            <Label x:Name="label2" Content="New Value String"  RenderTransformOrigin="0.348,-0.16" Grid.Row="4" Grid.Column="0"/>
-            <TextBox x:Name="new_val_str_box"   TextWrapping="Wrap" Text="New Val String"  Grid.Row="5" Grid.Column="0" />
-            <Label x:Name="label3" Content="Temp val"  RenderTransformOrigin="0.348,-0.16" Grid.Row="6" Grid.Column="0"/>
-            <TextBox x:Name="temp_box"   TextWrapping="Wrap" Text="Temp Val "  Grid.Row="7" Grid.Column="0" />
-        </Grid>
-    </Grid>
-
-
-
-
-
-
-
-
-
-
-
-</Window>
+        
+            <Label x:Name="label" 
+                    Content="Current Value"  
+                    Grid.Row="0" 
+                    Grid.Column="0" 
+                    Grid.ColumnSpan="2"/>
+            <TextBox x:Name="curr_val_box"  
+                    TextWrapping="Wrap" 
+                Text="current Val" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <Label x:Name="label1" Content="New Value"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="new_val_box" TextWrapping="Wrap" Text="New Val"   Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <Label x:Name="label2" Content="New Value String"  RenderTransformOrigin="0.348,-0.16" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="new_val_str_box"   TextWrapping="Wrap" Text="New Val String"  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" />
+            <Label x:Name="label3" Content="Temp val"  RenderTransformOrigin="0.348,-0.16" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <TextBox x:Name="temp_box"   TextWrapping="Wrap" Text="Temp Val "  Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" />
+        </-->

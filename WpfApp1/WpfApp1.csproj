@@ -146,5 +146,26 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bars 1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bars 2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bars 3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bars 4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bars 5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bars 7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bars 6.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
