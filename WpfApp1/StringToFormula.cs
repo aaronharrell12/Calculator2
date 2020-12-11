@@ -9,21 +9,23 @@ namespace WpfApp1
 
         public class StringToFormula
         {
-            private string[] _operators = { "-", "+", "/", "*", "^", "%" };
-            private string[] _mono_operators = { "sin", "cos", "log","abs","ln","pm"};
-            private string[] _constants = { "e", "pi" };
-            private Func<double, double, double>[] _operations = {
+            private string[] _operators      = { "-", "+", "/", "*","%", "^"};
+            private string[] _mono_operators = { "sin", "cos", "log","abs","ln","neg"};
+            private string[] _constants      = { "e", "pi" };
+        private Func<double, double, double>[] _operations = {
                 (a1, a2) => a1 - a2,
                 (a1, a2) => a1 + a2,
                 (a1, a2) => a1 / a2,
                 (a1, a2) => a1 * a2,
+                (a1, a2) => a1 % a2,
                 (a1, a2) => Math.Pow(a1, a2)
+         
 
             };
             private Func<double, double>[] _mono_operations = {
                 (a1)     => Math.Sin(a1),
                 (a1)     => Math.Cos(a1),
-                (a1)     => Math.Log(a1),
+                (a1)     => Math.Log10(a1),
                 (a1)     => Math.Abs(a1),
                 (a1)     => Math.Log(a1),
                 (a1)     => -a1
@@ -53,13 +55,25 @@ namespace WpfApp1
                         throw new ArgumentException("Mis-matched parentheses in expression");
                     }
 
+                // Check if number was added next
+                if (next)
+                {
 
-                    //If this is an operator  
-                    if (Array.IndexOf(_mono_operators, token) >= 0)
+                    while (monooperatorStack.Count > 0)
+                    {
+                        string mono_op = monooperatorStack.Pop();
+                        double arg1 = operandStack.Pop();
+                        operandStack.Push(_mono_operations[Array.IndexOf(_mono_operators, mono_op)](arg1));
+                    }
+                    next = false;
+                }
+
+                //If this is an operator  
+                if (Array.IndexOf(_mono_operators, token) >= 0)
                     {
 
                         monooperatorStack.Push(token);
-
+                        next = false;
                     }
                     else if (Array.IndexOf(_operators, token) >= 0)
                     {
@@ -84,17 +98,7 @@ namespace WpfApp1
                     }
 
 
-                    if (next)
-                    {
-
-                        while (monooperatorStack.Count > 0)
-                        {
-                            string mono_op = monooperatorStack.Pop();
-                            double arg1 = operandStack.Pop();
-                            operandStack.Push(_mono_operations[Array.IndexOf(_mono_operators, mono_op)](arg1));
-                        }
-                        next = false;
-                    }
+                   
                     tokenIndex += 1;
                 }
 
@@ -157,21 +161,24 @@ namespace WpfApp1
 
             public List<string> getTokens(string expression)
             {
-                string operators = "()^*/+-";
+                string operators = "()^%*/+-";
                 List<string> tokens = new List<string>();
                 StringBuilder sb = new StringBuilder();
                 bool wasNumber = false;
    
                 int i = 0;
+
+                // Loop through string
                 foreach (char c in expression.Replace(" ", string.Empty))
                 {
 
-                    // Finds operator
+                    // Finds binomial operator
                     if (operators.IndexOf(c) >= 0)
                     {
                         // Checks to see if there are digits 
                         if ((sb.Length > 0))
                         {
+                            // Add Token to string to token
                             tokens.Add(sb.ToString());
                             sb.Length = 0;
                         }

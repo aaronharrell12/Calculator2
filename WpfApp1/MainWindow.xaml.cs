@@ -31,6 +31,9 @@ namespace WpfApp1
         ArrayList History;
         bool res_op;
         StringToFormula stf;
+        String MonoString;
+        String oldHist;
+        int perCount;
         public MainWindow()
         {
             History = new ArrayList();
@@ -45,8 +48,9 @@ namespace WpfApp1
             new_value_string = ""; // Represents the number being currently entered as a string (because digits)
             prev_op = false; // Represents the previous operation.
             res_op = true;
-
-
+            MonoString = "";
+            oldHist="";
+            perCount = 0;
             // --------------- (Bind all buttons to a function based off of name)-------------------------------
 
             // Step 2:  Loop Through all buttons on the grid 
@@ -80,6 +84,12 @@ namespace WpfApp1
                         // binary operations (+,-,/,*)
                         case "Bin":
                             ele.Click += new RoutedEventHandler(Operations_Clicked);
+                            break;
+                        case "Mon":
+                            ele.Click += new RoutedEventHandler(Operations_mono_Clicked);
+                            break;
+                        case "Per":
+                            ele.Click += new RoutedEventHandler(Operations_Per_Clicked);
                             break;
                         // Equal to operation (=)
                         case "Result":
@@ -116,7 +126,7 @@ namespace WpfApp1
             String textIn = container_num.Text;
 
             if ( !((String)x.Content).Equals(".") || !textIn.Contains(".") ) {
-                if (textIn.Equals("0") || prev_op || res_op)
+                if (textIn.Equals("0") || prev_op || res_op || !MonoString.Equals(""))
                 {
                     textIn = (String)x.Content;
                 }
@@ -149,6 +159,37 @@ namespace WpfApp1
 
         }
 
+        private void Operations_mono_Clicked(object sender, RoutedEventArgs e)
+        {
+
+            Button x = (Button)sender;
+
+            // Text from user input
+            String container_numText = container_num.Text;
+
+            String content = (String)x.Content;
+
+            // Check to see if the mono string is empty
+            if (MonoString.Equals(""))
+            {
+                // Define the mono string to be [operation] ( [value] ) example sin(4)
+                MonoString = content + "(" + container_num.Text + ")";
+                oldHist    = History_win.Text;
+            }
+            else
+            {
+                // Define the mono string to be [operation]([monostring]) example cos(sin(4))
+                MonoString = content + "(" + MonoString + ")";
+            }
+
+    
+            container_num.Text = (stf.Eval(MonoString)).ToString();
+
+            History_win.Text = oldHist + MonoString;
+            prev_op = false;
+
+
+        }
         // When an operation is clicked modify the window
         private void Operations_Clicked(object sender, RoutedEventArgs e)
         {
@@ -161,7 +202,7 @@ namespace WpfApp1
             // Text from history window
             String history_winText   = History_win.Text;
 
-
+            // If no number has been input 
             if (prev_op)
             {
                 history_winText = history_winText.Substring(0, history_winText.Length - 1)+ (String)x.Content;
@@ -170,10 +211,17 @@ namespace WpfApp1
             else
             {
 
-                // Adds additional operations and values to the history container
-                history_winText += container_numText + (String)x.Content;
+                if (MonoString.Equals(""))
+                {
+                    // Adds additional operations and values to the history container
+                    history_winText += container_numText + (String)x.Content;
 
-
+                }
+                else
+                {
+                    history_winText += (String)x.Content;
+                    MonoString = "";
+                }
                 // Updates the history container
                
 
@@ -196,12 +244,62 @@ namespace WpfApp1
             temp_box.Text           =    temp_value.ToString();
             */
         }
+
+
+        private void Operations_Per_Clicked(object sender, RoutedEventArgs e)
+        {
+            Button x = (Button)sender;
+
+            String content_per =(String) x.Content;
+
+            if (content_per.Equals("("))
+            {
+                perCount++;
+            }
+            else
+            {
+                perCount--;
+            }
+
+            if(perCount>=0)
+            {
+
+                if (content_per.Equals(")"))
+                {
+                    
+                }
+                History_win.Text += content_per;
+            }
+            else 
+            {
+                perCount = 0;
+            }
+           
+        }
         private void Operations_Res_Clicked(object sender, RoutedEventArgs e)
         {
+            String history_winText = History_win.Text;
 
+            if (MonoString.Equals(""))
+            {
+                // Adds additional operations and values to the history container
+                history_winText += container_num.Text;
+
+            }
+            else
+            {
+                MonoString = "";
+            }
+
+
+            while (perCount > 0)
+            {
+                history_winText += ")";
+                perCount--;
+            }
 
             // 
-            container_num.Text = stf.Eval(History_win.Text+container_num.Text).ToString(); // Sets the calculator textbox to the temp value 
+            container_num.Text = stf.Eval(history_winText).ToString(); // Sets the calculator textbox to the temp value 
             History_win.Text = "";
             res_op = true;
 
