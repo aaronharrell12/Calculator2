@@ -36,3 +36,5 @@ C:\Users\Bussiness\Source\Repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\Wpf
 C:\Users\Bussiness\Source\Repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\WpfApp1.csproj.CoreCompileInputs.cache
 C:\Users\Bussiness\Source\Repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\WpfApp1.exe.manifest
 C:\Users\Bussiness\Source\Repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\WpfApp1.application
+C:\Users\Bussiness\Source\Repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\Window1.g.cs
+C:\Users\Bussiness\Source\Repos\aaronharrell12\Calculator2\WpfApp1\obj\Debug\Window1.baml

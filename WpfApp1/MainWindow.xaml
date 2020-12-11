@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         Name="window"
+        ResizeMode="NoResize"
         mc:Ignorable="d"
         Title="MainWindow" Height="575" Width="408" BorderBrush="White" Foreground="White" Background="White">
 
@@ -18,7 +19,6 @@
             <Setter Property="FontSize"         Value="15"                              />
             <!--Setter Property="FontWeight"       Value="Bold"                         /-->
         </Style>
-
         <!--Text Block-->
         <Style TargetType="TextBlock" x:Key="txtblk_style">
             <Setter Property="FontFamily"       Value="Fonts/Roboto-Light.ttf #Roboto" />
@@ -28,6 +28,18 @@
             <Setter Property="OpacityMask"      Value="#FFE0D0D0"                    />
             <Setter Property="Foreground"       Value="Black"                        />
             <Setter Property="FontWeight"       Value="Bold"                           />
+        </Style>
+        
+        <!--Text Block-->
+        <Style TargetType="TextBlock" x:Key="txtblk2_style">
+            <Setter Property="FontFamily"         Value="Fonts/Roboto-Light.ttf #Roboto" />
+            <Setter Property="FontSize"           Value="19"                             />
+            <Setter Property="VerticalAlignment"  Value="Bottom"/>
+            <Setter Property="Height"             Value="20"/>
+            <Setter Property="TextAlignment"      Value="Right"                          />
+            <Setter Property="OpacityMask"        Value="#FFE0D0D0"                    />
+            <Setter Property="Foreground"         Value="Gray"                        />
+            <Setter Property="FontWeight"         Value="Bold"                           />
         </Style>
 
         <!-- Navigation Panel Buttons-->
@@ -44,13 +56,17 @@
 
     <!-- Windows -->
     <Grid Name="canvas" Background="#7F000000" >
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="271*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="127*"/>
             <ColumnDefinition Width="273*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Second Background -->
-        <Grid Background="#7F000000" Grid.ColumnSpan="2">
+        <Grid Background="#7F000000" Grid.ColumnSpan="2" Grid.RowSpan="2">
 
         </Grid>
 
@@ -58,7 +74,7 @@
         <Grid Name="Top" 
                   Grid.Row="0"
                   VerticalAlignment="Top"
-                  Height="40" Grid.ColumnSpan="2"
+                  Height="40" Grid.ColumnSpan="2" Grid.RowSpan="2"
                   >
 
             <!--Grid Columns-->
@@ -406,7 +422,7 @@
         <Grid x:Name="Calculator" 
               HorizontalAlignment="Right"
               Width="400"
-              ShowGridLines="False" Grid.ColumnSpan="2"
+              ShowGridLines="False" Grid.ColumnSpan="2" Grid.RowSpan="2"
               >
 
             <!-- Grid Row-->
@@ -432,12 +448,7 @@
                            Canvas.Left   = "196"
                            Canvas.Top    = "108"
                            Grid.Row      = "0"  
-                           Style="{StaticResource txtblk_style}">
-                      
-                        <InlineUIContainer>
-                       
-                        </InlineUIContainer>
-                </TextBlock>
+                           Style="{StaticResource txtblk2_style}"/>
 
                 <!--BELOW: Box for Number-->
                 <TextBlock x:Name="container_num"
@@ -470,27 +481,41 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
 
                 <!--Grid Objects-->
-                <Button x:Name="Number_1"               Content="1"         Grid.Row="2" Grid.Column="0" Style="{StaticResource but_style}" />
-                <Button x:Name="Number_2"               Content="2"         Grid.Row="2" Grid.Column="1" Style="{StaticResource but_style}" />
-                <Button x:Name="Number_3"               Content="3"         Grid.Row="2" Grid.Column="2" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_dec"          Content="."         Grid.Row="3" Grid.Column="0" Style="{StaticResource but_style}" />
-                <Button x:Name="Number_4"               Content="4"         Grid.Row="1" Grid.Column="0" Style="{StaticResource but_style}" />
-                <Button x:Name="Number_5"               Content="5"         Grid.Row="1" Grid.Column="1" Style="{StaticResource but_style}" />
-                <Button x:Name="Number_6"               Content="6"         Grid.Row="1" Grid.Column="2" Style="{StaticResource but_style}" />
-                <Button x:Name="Number_0"               Content="0"         Grid.Row="3" Grid.Column="1" Style="{StaticResource but_style}" />
-                <Button x:Name="Number_7"               Content="7"         Grid.Row="0" Grid.Column="0" Style="{StaticResource but_style}" />
-                <Button x:Name="Number_8"               Content="8"         Grid.Row="0" Grid.Column="1" Style="{StaticResource but_style}" />
-                <Button x:Name="Number_9"               Content="9"         Grid.Row="0" Grid.Column="2" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_Result_eql"   Content="="         Grid.Row="3" Grid.Column="2" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_Bin_add"      Content="+"         Grid.Row="0" Grid.Column="3" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_Bin_sub"      Content="-"         Grid.Row="1" Grid.Column="3" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_Bin_mul"      Content="*"         Grid.Row="2" Grid.Column="3" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_Bin_div"      Content="/"         Grid.Row="3" Grid.Column="3" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_Bin_del"      Content="del"       Grid.Row="0" Grid.Column="4" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_clr"          Content="clr"       Grid.Row="1" Grid.Column="4" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_0"               Content="0" Tag="0" Grid.Row="5" Grid.Column="2" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_1"               Content="1"         Grid.Row="4" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_2"               Content="2"         Grid.Row="4" Grid.Column="2" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_3"               Content="3"         Grid.Row="4" Grid.Column="3" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_4"               Content="4"         Grid.Row="3" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_5"               Content="5"         Grid.Row="3" Grid.Column="2" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_6"               Content="6"         Grid.Row="3" Grid.Column="3" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_7"               Content="7"         Grid.Row="2" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_8"               Content="8"         Grid.Row="2" Grid.Column="2" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_9"               Content="9"         Grid.Row="2" Grid.Column="3" Style="{StaticResource but_style}" />
+                <Button x:Name="Number_dec"             Content="."         Grid.Row="5" Grid.Column="3" Style="{StaticResource but_style}" />
+                <Button x:Name="constant_e"             Content="e"         Grid.Row="0" Grid.Column="2" Style="{StaticResource but_style}" />
+                <Button x:Name="constant_pi"            Content="pi"        Grid.Row="0" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Result_eql"   Content="="         Grid.Row="5" Grid.Column="5" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_mod"      Content="%"         Grid.Row="0" Grid.Column="0" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_add"      Content="+"         Grid.Row="4" Grid.Column="4" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_sub"      Content="-"         Grid.Row="3" Grid.Column="4" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_mul"      Content="*"         Grid.Row="2" Grid.Column="4" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_div"      Content="/"         Grid.Row="1" Grid.Column="4" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_exp"      Content="^"         Grid.Row="1" Grid.Column="0" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Mon_log"      Content="log"       Grid.Row="4" Grid.Column="0" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Mon_sin"      Content="sin"       Grid.Row="3" Grid.Column="0" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Mon_cos"      Content="cos"       Grid.Row="2" Grid.Column="0" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Mon_ln"       Content="ln"        Grid.Row="5" Grid.Column="0" Style="{StaticResource but_style}" />
+                <Button x:Name="Opeartion_Mon_Abs"      Content="abs"       Grid.Row="1" Grid.Column="3" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Mon_pm"       Content="pm"        Grid.Row="5" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_per_left"     Content="("         Grid.Row="1" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_per_right"    Content=")"         Grid.Row="1" Grid.Column="2" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_del"          Content="del"       Grid.Row="0" Grid.Column="4" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_clr"          Content="clr"       Grid.Row="0" Grid.Column="3" Style="{StaticResource but_style}" />
 
             </Grid>
 
@@ -501,7 +526,7 @@
               Opacity="1"
               HorizontalAlignment="Right"
               Width="400"
-              Visibility="Hidden" Grid.ColumnSpan="2">
+              Visibility="Hidden" Grid.ColumnSpan="2" Grid.RowSpan="2">
 
             <!-- Grid Row-->
             <Grid.RowDefinitions>
@@ -518,17 +543,6 @@
             <Grid Grid.Row="1" 
                   >
                 <TextBox  >
-                    y=[sin]( [3*] (x) [+2] [+] [log](x) )
-                    
-                    [ Math.sin(
-                    , 3
-                    , + 
-                    , Math.log( 
-                    , x  
-                    , ) 
-                    , )
-                    ]
-
 
 
                 </TextBox>
@@ -546,7 +560,7 @@
               VerticalAlignment    = "Bottom"
               Width                = "0"   
               Height               = "500"
-              Opacity              = "0"
+              Opacity              = "0" Grid.Row="1"
        >
 
 
