@@ -165,23 +165,31 @@ namespace WpfApp1
                 List<string> tokens = new List<string>();
                 StringBuilder sb = new StringBuilder();
                 bool wasNumber = false;
-   
+                char last=' ';
                 int i = 0;
 
                 // Loop through string
                 foreach (char c in expression.Replace(" ", string.Empty))
                 {
 
-                    // Finds binomial operator
-                    if (operators.IndexOf(c) >= 0)
+
+                if (!Char.IsDigit(last) && c == '-')
+                {
+                    sb.Append(c);
+                }
+
+                // Finds binomial operator
+                else if (operators.IndexOf(c) >= 0)
                     {
-                        // Checks to see if there are digits 
-                        if ((sb.Length > 0))
+
+                    // Checks to see if there are digits 
+                    if ((sb.Length > 0))
                         {
                             // Add Token to string to token
                             tokens.Add(sb.ToString());
                             sb.Length = 0;
                         }
+            
 
                         // Adds Operator
                         tokens.Add(c.ToString());
@@ -224,6 +232,7 @@ namespace WpfApp1
                         sb.Append(c);
                         wasNumber = true;
                     }
+                last = c;
                 }
 
                 // Adds remaining digits as number

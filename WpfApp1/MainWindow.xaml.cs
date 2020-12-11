@@ -34,6 +34,7 @@ namespace WpfApp1
         String MonoString;
         String oldHist;
         int perCount;
+        bool checkLeft;
         public MainWindow()
         {
             History = new ArrayList();
@@ -187,6 +188,7 @@ namespace WpfApp1
 
             History_win.Text = oldHist + MonoString;
             prev_op = false;
+            checkLeft = false;
 
 
         }
@@ -228,7 +230,7 @@ namespace WpfApp1
             }
             History_win.Text = history_winText;
             prev_op = true;
-            
+            checkLeft = false;
             // CHANGE STATE VARIABLES
             //prev_op = (String)x.Content;
             //current_Value = temp_value;
@@ -254,6 +256,7 @@ namespace WpfApp1
 
             if (content_per.Equals("("))
             {
+                checkLeft = true;
                 perCount++;
             }
             else
@@ -264,11 +267,17 @@ namespace WpfApp1
             if(perCount>=0)
             {
 
-                if (content_per.Equals(")"))
+                if (content_per.Equals(")") && checkLeft)
                 {
-                    
+
+                    History_win.Text += container_num.Text+content_per;
+
                 }
-                History_win.Text += content_per;
+                else
+                {
+                    History_win.Text += content_per;
+                }
+                
             }
             else 
             {
@@ -279,6 +288,7 @@ namespace WpfApp1
         private void Operations_Res_Clicked(object sender, RoutedEventArgs e)
         {
             String history_winText = History_win.Text;
+            checkLeft = false;
 
             if (MonoString.Equals(""))
             {
@@ -319,14 +329,20 @@ namespace WpfApp1
 
         private void Operations_clr_Clicked(object sender, RoutedEventArgs e)
         {
+            checkLeft = false;
+            res_op = true;
+            perCount = 0;
+            MonoString = "";
+            prev_op = false;
             // RESET ALL VALUES TO DEFAULT
-           // current_Value = 0;
+            // current_Value = 0;
             //new_value = 0;
             //temp_value = 0;
             //new_value_string = "";
             //prev_op = "";
             container_num.Text = "0";
             History_win.Text = "";
+
 
             // TESTING
             /*
