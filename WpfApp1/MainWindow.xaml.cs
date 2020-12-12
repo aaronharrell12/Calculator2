@@ -35,6 +35,7 @@ namespace WpfApp1
         String oldHist;
         int perCount;
         bool checkLeft;
+        bool checkRight;
         public MainWindow()
         {
             History = new ArrayList();
@@ -52,6 +53,8 @@ namespace WpfApp1
             MonoString = "";
             oldHist="";
             perCount = 0;
+            checkLeft = false;
+            checkRight = false;
             // --------------- (Bind all buttons to a function based off of name)-------------------------------
 
             // Step 2:  Loop Through all buttons on the grid 
@@ -231,6 +234,7 @@ namespace WpfApp1
             History_win.Text = history_winText;
             prev_op = true;
             checkLeft = false;
+
             // CHANGE STATE VARIABLES
             //prev_op = (String)x.Content;
             //current_Value = temp_value;
@@ -261,6 +265,7 @@ namespace WpfApp1
             }
             else
             {
+                checkRight = true;
                 perCount--;
             }
 
@@ -273,9 +278,13 @@ namespace WpfApp1
                     History_win.Text += container_num.Text+content_per;
 
                 }
+                if(content_per.Equals("(") && checkRight)
+                {
+                    
+                }
                 else
                 {
-                    History_win.Text += content_per;
+                    History_win.Text += container_num.Text ;
                 }
                 
             }

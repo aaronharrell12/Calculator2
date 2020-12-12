@@ -19,8 +19,8 @@
             <Setter Property="FontSize"         Value="15"                              />
             <!--Setter Property="FontWeight"       Value="Bold"                         /-->
         </Style>
-        
-        
+
+
         <!--Text Block-->
         <Style TargetType="TextBlock" x:Key="txtblk_style">
             <Setter Property="FontFamily"       Value="Fonts/Roboto-Light.ttf #Roboto" />
@@ -31,7 +31,7 @@
             <Setter Property="Foreground"       Value="Black"                        />
             <Setter Property="FontWeight"       Value="Bold"                           />
         </Style>
-        
+
         <!--Text Block-->
         <Style TargetType="TextBlock" x:Key="txtblk2_style">
             <Setter Property="FontFamily"         Value="Fonts/Roboto-Light.ttf #Roboto" />
@@ -516,7 +516,11 @@
                 <Button x:Name="Operation_Mon_neg"      Content="neg"        Grid.Row="5" Grid.Column="1" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Per_left"     Content="("         Grid.Row="1" Grid.Column="1" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Per_right"    Content=")"         Grid.Row="1" Grid.Column="2" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_del"          Content="del"       Grid.Row="0" Grid.Column="4" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_del"          Content=""       Grid.Row="0" Grid.Column="4" Style="{StaticResource but_style}" Background="White" Click="Operation_del_Click" >
+                    <Button.Foreground>
+                        <ImageBrush ImageSource="9739889771543238875-128.png" Stretch="Uniform"/>
+                    </Button.Foreground>
+                </Button>
                 <Button x:Name="Operation_clr"          Content="clr"       Grid.Row="0" Grid.Column="3" Style="{StaticResource but_style}" />
 
             </Grid>
