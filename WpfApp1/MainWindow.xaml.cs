@@ -493,8 +493,40 @@ namespace WpfApp1
 
         private void Operation_del_Click(object sender, RoutedEventArgs e)
         {
-            
+            // Hold last input in history container
+            char lastIn;
+
+
+
+            //  Grab the last input [Also check to see if history container is empty.]
+            if (container_num.Text.Length > 1)
+            {
+                lastIn = (container_num.Text)[(container_num.Text).Length - 2];
+            }
+            else
+            {
+                lastIn = ' ';
+            }
+
+            if (prev_op.Equals("num"))
+            {
+                if(lastIn == ' ' || lastIn== '-' || lastIn=='0' )
+                {
+                    container_num.Text = "0";
+                }
+                else if (lastIn == '.')
+                {
+                    container_num.Text = (container_num.Text).Substring(0, (container_num.Text).Length - 2);
+                }
+                else
+                {
+                    container_num.Text = (container_num.Text).Substring(0, (container_num.Text).Length - 1);
+                }
+           
+            }
         }
+
+   
     }
 
 

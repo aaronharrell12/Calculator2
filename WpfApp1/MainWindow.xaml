@@ -516,7 +516,7 @@
                 <Button x:Name="Operation_Mon_neg"      Content="neg"       Grid.Row="5" Grid.Column="1" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Per_left"     Content="("         Grid.Row="1" Grid.Column="1" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Per_right"    Content=")"         Grid.Row="1" Grid.Column="2" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_del"          Content="del"       Grid.Row="0" Grid.Column="4" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_del"          Content="del"       Grid.Row="0" Grid.Column="4" Style="{StaticResource but_style}" Click="Operation_del_Click" />
                 <Button x:Name="Operation_clr"          Content="clr"       Grid.Row="0" Grid.Column="3" Style="{StaticResource but_style}" />
 
             </Grid>
