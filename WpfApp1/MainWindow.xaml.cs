@@ -26,7 +26,7 @@ namespace WpfApp1
         double current_Value;
         double new_value;
         String new_value_string;
-        bool prev_op;
+        String prev_op;
         double temp_value;
         ArrayList History;
         bool res_op;
@@ -36,6 +36,8 @@ namespace WpfApp1
         int perCount;
         bool checkLeft;
         bool checkRight;
+
+        const string binomial_operators = "+-/*^%";
         public MainWindow()
         {
             History = new ArrayList();
@@ -48,7 +50,7 @@ namespace WpfApp1
             temp_value = 0; // Represents a temporary value for new operations
             new_value = 0; // Represents the number being currently entered
             new_value_string = ""; // Represents the number being currently entered as a string (because digits)
-            prev_op = false; // Represents the previous operation.
+            prev_op = ""; // Represents the previous operation.
             res_op = true;
             MonoString = "";
             oldHist="";
@@ -75,8 +77,13 @@ namespace WpfApp1
                     ele.Click += new RoutedEventHandler(Numbers_Clicked);
 
                 }
+                else if (name.Equals("Constant"))
+                {
+
+                    ele.Click += new RoutedEventHandler(Constants_Clicked);
+                }
                 // Step 2.5: Check to see if button is a operation
-                if (name.Equals("Operation"))
+                else if (name.Equals("Operation"))
                 {
 
                     // Step 2.5.1: Grab the Second part
@@ -122,6 +129,9 @@ namespace WpfApp1
         private void Numbers_Clicked(object sender, RoutedEventArgs e)
         {
 
+            
+
+
 
             // Step 1: Grab the button being sent
             Button x = (Button)sender;
@@ -129,9 +139,14 @@ namespace WpfApp1
             // Step 2: Grab the text in the calculator
             String textIn = container_num.Text;
 
-            if ( !((String)x.Content).Equals(".") || !textIn.Contains(".") ) {
-                if (textIn.Equals("0") || prev_op || res_op || !MonoString.Equals(""))
+
+            // First check for multiple decimals and also check 
+            if ( !((String)x.Content).Equals(".") || !textIn.Contains(".") )
+            {
+
+                if (textIn.Equals("0") || prev_op.Equals("Res") || prev_op.Equals("Binom") || prev_op.Equals("Clr") || prev_op.Equals("Constant")||!MonoString.Equals(""))
                 {
+
                     textIn = (String)x.Content;
                 }
 
@@ -143,15 +158,15 @@ namespace WpfApp1
 
             }
 
-            prev_op = false;
+     
             res_op = false;
-
+            prev_op = "num";
 
             // Step 5: 
             container_num.Text = textIn;
 
 
-
+            MonoString = "";
             // TESTING ONLY (CHECKS VALUES)
             /*
             curr_val_box.Text    = current_Value.ToString();
@@ -163,10 +178,33 @@ namespace WpfApp1
 
         }
 
-        private void Operations_mono_Clicked(object sender, RoutedEventArgs e)
+        private void Constants_Clicked(object sender, RoutedEventArgs e)
         {
 
+            Button x        = (Button)    sender;
+
+            String constant = (String) x.Content;
+            String num      =                 "";
+            switch (constant)
+            {
+                case "e":
+                    num = Math.E.ToString();
+                    break;
+                case "pi":
+                    num = Math.PI.ToString();
+                    break;
+            }
+
+            container_num.Text = num;
+
+            prev_op = "Constant";
+            MonoString = "";
+        }
+
+        private void Operations_mono_Clicked(object sender, RoutedEventArgs e)
+        {
             Button x = (Button)sender;
+
 
             // Text from user input
             String container_numText = container_num.Text;
@@ -175,10 +213,28 @@ namespace WpfApp1
 
             // Check to see if the mono string is empty
             if (MonoString.Equals(""))
-            {
+            {   
                 // Define the mono string to be [operation] ( [value] ) example sin(4)
                 MonoString = content + "(" + container_num.Text + ")";
                 oldHist    = History_win.Text;
+
+
+                char lastInput;
+
+                //  Grab the last input [Also check to see if history container is empty.]
+                    if (oldHist.Length > 0)
+                    {
+                        lastInput = (oldHist)[(oldHist).Length - 1];
+                    }
+                    else
+                    {
+                        lastInput = ' ';
+                    }
+                if (lastInput == ')')
+                {
+                    oldHist = oldHist + "*";
+                }
+
             }
             else
             {
@@ -188,18 +244,31 @@ namespace WpfApp1
 
     
             container_num.Text = (stf.Eval(MonoString)).ToString();
-
             History_win.Text = oldHist + MonoString;
-            prev_op = false;
+            prev_op = "mono";
             checkLeft = false;
 
 
         }
-        // When an operation is clicked modify the window
+
+        /// <summary>
+        ///     This handles binomial operations (operations that take in two inputs)
+        ///     
+        ///     Examples: 
+        ///             1+2
+        ///             3*4
+        ///             4%5
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        // When an binomial_operations is clicked modify the window
         private void Operations_Clicked(object sender, RoutedEventArgs e)
         {
-
+            
             Button x = (Button)sender;
+
+            // Button Opeartion
+            String op = (String)x.Content;
 
             // Text from user input
             String container_numText = container_num.Text;
@@ -208,10 +277,9 @@ namespace WpfApp1
             String history_winText   = History_win.Text;
 
             // If no number has been input 
-            if (prev_op)
+            if (prev_op.Equals("Binom"))
             {
-                history_winText = history_winText.Substring(0, history_winText.Length - 1)+ (String)x.Content;
-
+                history_winText = history_winText.Substring(0, history_winText.Length - 1) + op ;
             }
             else
             {
@@ -219,12 +287,12 @@ namespace WpfApp1
                 if (MonoString.Equals(""))
                 {
                     // Adds additional operations and values to the history container
-                    history_winText += container_numText + (String)x.Content;
+                    history_winText += container_numText + op;
 
                 }
                 else
                 {
-                    history_winText += (String)x.Content;
+                    history_winText += op;
                     MonoString = "";
                 }
                 // Updates the history container
@@ -232,9 +300,8 @@ namespace WpfApp1
 
             }
             History_win.Text = history_winText;
-            prev_op = true;
             checkLeft = false;
-
+            prev_op = "Binom";
             // CHANGE STATE VARIABLES
             //prev_op = (String)x.Content;
             //current_Value = temp_value;
@@ -252,88 +319,146 @@ namespace WpfApp1
         }
 
 
+
+        /// <summary>
+        ///     Handles clicks on the parathesis buttons (left and right). 
+        ///     
+        ///             - Handles events where :
+        ///                 - Right parathesis has been pressed without 
+        ///            
+        ///     Instructions:
+        ///         When handling more edge cases. Please add to the switch statement to make the coding easier to read.
+        ///
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Operations_Per_Clicked(object sender, RoutedEventArgs e)
         {
+            
+            // Grab button 
             Button x = (Button)sender;
-
+            // Grab button text
             String content_per =(String) x.Content;
+            // Hold last input in history container
+            char lastInput;      
 
-            if (content_per.Equals("("))
-            {
-                checkLeft = true;
-                perCount++;
-            }
-            else
-            {
-                checkRight = true;
-                perCount--;
-            }
 
-            if(perCount>=0)
-            {
 
-                if (content_per.Equals(")") && checkLeft)
+            //  Grab the last input [Also check to see if history container is empty.]
+                if (History_win.Text.Length > 0)
                 {
-
-                    History_win.Text += container_num.Text+content_per;
-
-                }
-                if(content_per.Equals("(") && checkRight)
-                {
-                    
+                    lastInput = (History_win.Text)[(History_win.Text).Length - 1];
                 }
                 else
                 {
-                    History_win.Text += container_num.Text ;
+                    lastInput = ' ';
                 }
-                
-            }
-            else 
+
+
+            // Seperate edge cases for left and right parathesis
+            switch(content_per)
             {
-                perCount = 0;
+
+                case "(":
+                    perCount += 1;
+
+                    // Case 1: Correct for the case where adding a left parathesis after a right parathesis add an implied multiplacation symbol. "18+sin(3)"---> "18+sin(3)*("
+                    if (lastInput==')')
+                    {
+                        History_win.Text += "*(";
+                    }
+
+                    // Default
+                    else
+                    {
+                        History_win.Text += "(";
+                    }
+                    break;
+
+                case ")":
+                    if (perCount > 0)
+                    {
+                        perCount -= 1;
+
+                        // Case 1 : Avoids closing parathesis where the previous symbol isn't a number - Examples: "12+("---> "12+()"  or "12+(12+"---> "12+(12+)"
+                        if (!Char.IsDigit(lastInput) && lastInput!=')')
+                        {
+                            History_win.Text += container_num.Text + ")";
+                            container_num.Text = "0";
+                        }
+
+                        // Default
+                        else
+                        {
+                            History_win.Text += ")";
+                        }
+                    }
+                    break;
             }
-           
+
+
+
+            // CHANGE PROGRAM STATE VARIABLES 
+            MonoString = "";
+            prev_op = "Per";
+
+
         }
+
+        /// <summary>
+        ///     Handles the clicking of the results button (=).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Operations_Res_Clicked(object sender, RoutedEventArgs e)
         {
+
+           
+
+            // Grabs the history container text
             String history_winText = History_win.Text;
-            checkLeft = false;
 
-            if (MonoString.Equals(""))
-            {
-                // Adds additional operations and values to the history container
-                history_winText += container_num.Text;
-
-            }
-            else
-            {
-                MonoString = "";
-            }
+            // Hold last input in history container
+            char lastInput;
 
 
-            while (perCount > 0)
-            {
-                history_winText += ")";
-                perCount--;
-            }
 
-            // 
+            //  Grab the last input [Also check to see if history container is empty.]
+                if (History_win.Text.Length > 0)
+                {
+                    lastInput = (History_win.Text)[(History_win.Text).Length - 1];
+                }
+                else
+                {
+                    lastInput = ' ';
+                }
+
+            // Checks to see if there is a dangling binomial operator
+                if (binomial_operators.IndexOf(lastInput)>=0)
+                {
+                    history_winText += container_num.Text;
+                }
+
+            // Closes any open parathesises 
+                while (perCount > 0)
+                {
+                    history_winText += ")";
+                    perCount--;
+                }
+
             container_num.Text = stf.Eval(history_winText).ToString(); // Sets the calculator textbox to the temp value 
             History_win.Text = "";
             res_op = true;
-
+            MonoString = "";
             // CHANGE STATE VARIABLES 
             new_value = 0; // Sets the new value to 0.
-            prev_op = false; // Previous operation is resultant
             new_value_string = temp_value.ToString(); // Sets the new value string to temp
-
+            prev_op = "Res";
             // TESTING 
-            /*
-            curr_val_box.Text     = current_Value.ToString();
-            new_val_box.Text      =     new_value.ToString();
-            temp_box.Text         =    temp_value.ToString();
-            new_val_str_box.Text  =         new_value_string;
-            */
+            /* curr_val_box.Text     = current_Value.ToString();
+               new_val_box.Text      =     new_value.ToString();
+               temp_box.Text         =    temp_value.ToString();
+               new_val_str_box.Text  =         new_value_string;      */
         }
 
         private void Operations_clr_Clicked(object sender, RoutedEventArgs e)
@@ -342,15 +467,10 @@ namespace WpfApp1
             res_op = true;
             perCount = 0;
             MonoString = "";
-            prev_op = false;
-            // RESET ALL VALUES TO DEFAULT
-            // current_Value = 0;
-            //new_value = 0;
-            //temp_value = 0;
-            //new_value_string = "";
-            //prev_op = "";
+            prev_op = "Clr";
             container_num.Text = "0";
             History_win.Text = "";
+
 
 
             // TESTING
@@ -362,22 +482,18 @@ namespace WpfApp1
             */
         }
 
-        private void Operation_Bin_mul_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-
-        private void drawFunction(object sender, RoutedEventArgs e)
-        {
-
-        }
+ 
 
 
         // Useless function [DONT DELETE]
         private void nothing(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Operation_del_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 

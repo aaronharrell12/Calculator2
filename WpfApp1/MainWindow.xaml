@@ -499,8 +499,8 @@
                 <Button x:Name="Number_8"               Content="8"         Grid.Row="2" Grid.Column="2" Style="{StaticResource but_style}" />
                 <Button x:Name="Number_9"               Content="9"         Grid.Row="2" Grid.Column="3" Style="{StaticResource but_style}" />
                 <Button x:Name="Number_dec"             Content="."         Grid.Row="5" Grid.Column="3" Style="{StaticResource but_style}" />
-                <Button x:Name="constant_e"             Content="e"         Grid.Row="0" Grid.Column="2" Style="{StaticResource but_style}" />
-                <Button x:Name="constant_pi"            Content="pi"        Grid.Row="0" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Constant_e"             Content="e"         Grid.Row="0" Grid.Column="2" Style="{StaticResource but_style}" />
+                <Button x:Name="Constant_pi"            Content="pi"        Grid.Row="0" Grid.Column="1" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Result_eql"   Content="="         Grid.Row="5" Grid.Column="5" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Bin_mod"      Content="%"         Grid.Row="0" Grid.Column="0" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Bin_add"      Content="+"         Grid.Row="4" Grid.Column="4" Style="{StaticResource but_style}" />
@@ -513,14 +513,10 @@
                 <Button x:Name="Operation_Mon_cos"      Content="cos"       Grid.Row="2" Grid.Column="0" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Mon_ln"       Content="ln"        Grid.Row="5" Grid.Column="0" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Mon_abs"      Content="abs"       Grid.Row="1" Grid.Column="3" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_Mon_neg"      Content="neg"        Grid.Row="5" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Mon_neg"      Content="neg"       Grid.Row="5" Grid.Column="1" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Per_left"     Content="("         Grid.Row="1" Grid.Column="1" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Per_right"    Content=")"         Grid.Row="1" Grid.Column="2" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_del"          Content=""       Grid.Row="0" Grid.Column="4" Style="{StaticResource but_style}" Background="White" Click="Operation_del_Click" >
-                    <Button.Foreground>
-                        <ImageBrush ImageSource="9739889771543238875-128.png" Stretch="Uniform"/>
-                    </Button.Foreground>
-                </Button>
+                <Button x:Name="Operation_del"          Content="del"       Grid.Row="0" Grid.Column="4" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_clr"          Content="clr"       Grid.Row="0" Grid.Column="3" Style="{StaticResource but_style}" />
 
             </Grid>

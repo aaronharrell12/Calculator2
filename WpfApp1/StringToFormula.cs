@@ -173,7 +173,7 @@ namespace WpfApp1
                 {
 
 
-                if (!Char.IsDigit(last) && c == '-')
+                if (!Char.IsDigit(last)&& last!=')' && c == '-')
                 {
                     sb.Append(c);
                 }
@@ -224,7 +224,7 @@ namespace WpfApp1
                     // finds number
                     else
                     {
-                        if (sb.Length > 0 && !wasNumber)
+                        if (sb.Length > 0 && last != '-' && !wasNumber)
                         {
                             throw new ArgumentException("Non Operator found in expression.");
                         }
