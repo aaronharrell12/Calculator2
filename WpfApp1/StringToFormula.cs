@@ -11,7 +11,6 @@ namespace WpfApp1
         {
             private string[] _operators      = { "-", "+", "/", "*","%", "^"};
             private string[] _mono_operators = { "sin", "cos", "log","abs","ln","neg"};
-            private string[] _constants      = { "e", "pi" };
         private Func<double, double, double>[] _operations = {
                 (a1, a2) => a1 - a2,
                 (a1, a2) => a1 + a2,
@@ -19,12 +18,10 @@ namespace WpfApp1
                 (a1, a2) => a1 * a2,
                 (a1, a2) => a1 % a2,
                 (a1, a2) => Math.Pow(a1, a2)
-         
-
             };
             private Func<double, double>[] _mono_operations = {
                 (a1)     => Math.Sin(a1),
-                (a1)     => Math.Cos(a1),
+                (a1)     => Math.Cos(a1), 
                 (a1)     => Math.Log10(a1),
                 (a1)     => Math.Abs(a1),
                 (a1)     => Math.Log(a1),
