@@ -7,7 +7,7 @@
         Name="window"
         ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="MainWindow" Height="575" Width="408" BorderBrush="White" Foreground="White" Background="White">
+        Title="Calculator" Height="575" Width="408" BorderBrush="White" Foreground="White" Background="White">
 
     <!-- Style -->
     <Window.Resources>
@@ -550,46 +550,3 @@
 
 </Window>
 
-
-<!--Color #4A5668-->
-
-
-<!-- Toggle Button (Open panel )-->
-
-
-<!-- Navigation Panel -->
-
-
-<!--Grid Name ="Testing2" Grid.Row="0" Grid.Column="0">
-        
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="12*"/>
-            </Grid.ColumnDefinitions>
-        
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-            </Grid.RowDefinitions>
-        
-            <Label x:Name="label" 
-                    Content="Current Value"  
-                    Grid.Row="0" 
-                    Grid.Column="0" 
-                    Grid.ColumnSpan="2"/>
-            <TextBox x:Name="curr_val_box"  
-                    TextWrapping="Wrap" 
-                Text="current Val" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
-            <Label x:Name="label1" Content="New Value"  Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="new_val_box" TextWrapping="Wrap" Text="New Val"   Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
-            <Label x:Name="label2" Content="New Value String"  RenderTransformOrigin="0.348,-0.16" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="new_val_str_box"   TextWrapping="Wrap" Text="New Val String"  Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" />
-            <Label x:Name="label3" Content="Temp val"  RenderTransformOrigin="0.348,-0.16" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="temp_box"   TextWrapping="Wrap" Text="Temp Val "  Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" />
-        </-->

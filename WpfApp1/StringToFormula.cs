@@ -6,11 +6,16 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
-
-        public class StringToFormula
+    /// <summary>
+    ///     DESCRIPTION: The string to Formula class takes in a string and generates a result.
+    /// </summary>
+    public class StringToFormula
         {
+       
             private string[] _operators      = { "-", "+", "/", "*","%", "^"};
             private string[] _mono_operators = { "sin", "cos", "log","abs","ln","neg"};
+
+
         private Func<double, double, double>[] _operations = {
                 (a1, a2) => a1 - a2,
                 (a1, a2) => a1 + a2,
@@ -20,15 +25,20 @@ namespace WpfApp1
                 (a1, a2) => Math.Pow(a1, a2)
             };
             private Func<double, double>[] _mono_operations = {
-                (a1)     => Math.Sin(a1),
-                (a1)     => Math.Cos(a1), 
+                (a1)     =>   Math.Sin(a1),
+                (a1)     =>   Math.Cos(a1), 
                 (a1)     => Math.Log10(a1),
-                (a1)     => Math.Abs(a1),
-                (a1)     => Math.Log(a1),
+                (a1)     =>   Math.Abs(a1),
+                (a1)     =>   Math.Log(a1),
                 (a1)     => -a1
             };
 
-            public double Eval(string expression)
+
+
+        /// <summary>
+        ///     DESCRIPTION: This is the main function to be executed and does the bulk of the work.
+        /// </summary>
+        public double Eval(string expression)
             {
                 List<string>  tokens            = getTokens(expression);//  ["(", "2","+","45",")"]
                 Stack<double> operandStack      =   new Stack<double>();//  ["2","45"]
@@ -122,7 +132,12 @@ namespace WpfApp1
                 }
                 return operandStack.Pop();
             }
-
+            /// <summary>
+            ///     DESCRIPTION: This is a helper function that recursively helps deal with parenthesis. Generally what it does it grabs all tokens between the two matching parenthesis and produces a string from them.
+            /// </summary>
+            /// <param name="tokens"></param>
+            /// <param name="index"> The index where the first parenthesis's starts</param>
+            /// <returns></returns>
             private string getSubExpression(List<string> tokens, ref int index)
             {
                 StringBuilder subExpr = new StringBuilder();
@@ -131,31 +146,22 @@ namespace WpfApp1
                 while (index < tokens.Count && parenlevels > 0)
                 {
                     string token = tokens[index];
-                    if (tokens[index] == "(")
-                    {
-                        parenlevels += 1;
-                    }
-
-                    if (tokens[index] == ")")
-                    {
-                        parenlevels -= 1;
-                    }
-
-                    if (parenlevels > 0)
-                    {
-                        subExpr.Append(token);
-                    }
-
+                    if (tokens[index] == "(")  parenlevels += 1;
+                    if (tokens[index] == ")")  parenlevels -= 1;
+                    if (parenlevels > 0)subExpr.Append(token);
                     index += 1;
                 }
 
-                if ((parenlevels > 0))
-                {
-                    throw new ArgumentException("Mis-matched parentheses in expression");
-                }
+                if ((parenlevels > 0))  throw new ArgumentException("Mis-matched parentheses in expression");
+                
                 return subExpr.ToString();
             }
 
+        /// <summary>
+        ///     DESCRIPTION: This is a helper function that generates the takes a string as an expression an generates a list of tokens that.
+        /// </summary>
+        /// <param name="expression"></param>
+        /// <returns></returns>
             public List<string> getTokens(string expression)
             {
                 string operators = "()^%*/+-";
@@ -170,10 +176,8 @@ namespace WpfApp1
                 {
 
 
-                if (!Char.IsDigit(last)&& last!=')' && c == '-')
-                {
-                    sb.Append(c);
-                }
+                if (!Char.IsDigit(last)&& last!=')' && c == '-') sb.Append(c);
+                
 
                 // Finds binomial operator
                 else if (operators.IndexOf(c) >= 0)
@@ -221,11 +225,7 @@ namespace WpfApp1
                     // finds number
                     else
                     {
-                        if (sb.Length > 0 && last != '-' && !wasNumber)
-                        {
-                            throw new ArgumentException("Non Operator found in expression.");
-                        }
-
+                        if (sb.Length > 0 && last != '-' && !wasNumber)  throw new ArgumentException("Non Operator found in expression.");
                         sb.Append(c);
                         wasNumber = true;
                     }
@@ -233,10 +233,8 @@ namespace WpfApp1
                 }
 
                 // Adds remaining digits as number
-                if ((sb.Length > 0))
-                {
-                    tokens.Add(sb.ToString());
-                }
+                if ((sb.Length > 0))  tokens.Add(sb.ToString());
+              
                 return tokens;
             }
         }

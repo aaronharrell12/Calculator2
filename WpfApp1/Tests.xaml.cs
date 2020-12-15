@@ -15,12 +15,12 @@ using System.Windows.Shapes;
 namespace WpfApp1
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Tests.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Tests : Window
     {
         StringToFormula x;
-        public Window1()
+        public Tests()
         {
             x = new StringToFormula();
 

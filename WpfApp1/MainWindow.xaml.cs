@@ -34,8 +34,6 @@ namespace WpfApp1
         {
             
             InitializeComponent();
-
-
             // ------------------------------- Initialize all variables. ------------------------------------------
 
             stf                 =   new StringToFormula();              // Object Used to compute expressions 
@@ -134,13 +132,18 @@ namespace WpfApp1
         /// <summary>
         ///     Function 
         ///     DESCRIPTION:  Adds a digit/decimal to the number window.
+        ///     --------------------------------------------------------|                             --------------------------------------------------------
+        ///     |                                                       |                            |                                                        |
+        ///     --------------------------------------------------------| ------ press 3/2/./4 ---->  --------------------------------------------------------|
+        ///     |                                                      0|                            |                                                    32.4|
+        ///     --------------------------------------------------------|                             --------------------------------------------------------|
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-            private void Numbers_Clicked(object sender, RoutedEventArgs e)
+        private void Numbers_Clicked(object sender, RoutedEventArgs e)
             {
+                if (prev_op.Equals("Res")) History_win.Text = "";
 
-           
                 Button numberButton      =               (Button)sender; // Grab the button being sent
                 String numberValue       = (String)numberButton.Content; // Grab the digit or decimal
                 String textIn            =           container_num.Text; // Grab the text in the calculator
@@ -152,8 +155,8 @@ namespace WpfApp1
                     // Clears number container under a couple different scenarios
                     if (textIn.Equals("0") || prev_op.Equals("Res") || prev_op.Equals("Binom") || prev_op.Equals("Clr") || prev_op.Equals("Constant")||!MonoString.Equals(""))
                     {
-
-                        container_num.Text = numberValue;
+                        if((numberValue).Equals(".")) container_num.Text = "0"+ numberValue;
+                        else                          container_num.Text = numberValue;
                     }
 
                     // Adds a digit (or decimal) to the input
@@ -177,13 +180,18 @@ namespace WpfApp1
         ///         - e 
         ///         - pi
         ///     and replaces them with the approriate math value in the number container
+        ///     --------------------------------------------------------|                          --------------------------------------------------------
+        ///     |                                                       |                         |                                                       |
+        ///     --------------------------------------------------------|  ------ press pi ---->  --------------------------------------------------------|
+        ///     |                                                      0|                         |                      3.1415926535897932384626433832795|
+        ///     --------------------------------------------------------|                         --------------------------------------------------------|
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-            private void Constants_Clicked(object sender, RoutedEventArgs e)
+        private void Constants_Clicked(object sender, RoutedEventArgs e)
             {
-
-                Button constantButton        = (Button)                 sender; // Grabs grid button
+            if (prev_op.Equals("Res")) History_win.Text = "";
+            Button constantButton        = (Button)                 sender; // Grabs grid button
                 String constant              = (String) constantButton.Content; // Grabs text contained in button
                 String num                   =                              ""; // Defines number to be added
 
@@ -221,7 +229,9 @@ namespace WpfApp1
         ///            |                || State 0  |    |   State 1   |    |      State 2     |    |       State 3        |    |        State 4            |
         ///            | ---------------||----------|----|-------------|----|------------------|----|----------------------|----|---------------------------|
         ///            | User Presses   || No Press |--->|   [sin]     |--->|       [cos]      |--->|          [ln]        |--->|         [abs]             |
+        ///            |----------------||----------|----|-------------|----|------------------|----|----------------------|----|---------------------------|
         ///            | Number Window  ||   "4"    |--->|  "0.06975"  |--->|     "0.999999"   |--->|        "-7.411"      |--->|        "7.411"            |
+        ///            |----------------||----------|----|-------------|----|------------------|----|----------------------|----|---------------------------|
         ///            | History window ||  "12+"   |--->| "12+sin(4)" |--->|  "12+cos(sin(4))"|--->|  "12+ln(cos(sin(4)))"|--->| "12+abs(ln(cos(sin(4))))" |
         ///            -------------------------------------------------------------------------------------------------------------------------------------- 
         ///             
@@ -234,28 +244,31 @@ namespace WpfApp1
         ///            |                || State 0  |    |   State 1   |    |      State 2     |    |       State 3        |    |        State 4            |
         ///            | ---------------||----------|----|-------------|----|------------------|----|----------------------|----|---------------------------|
         ///            | User Presses   || No Press |--->|   [sin]     |--->|       [cos]      |--->|          [ln]        |--->|         [abs]             |
+        ///            |----------------||----------|----|-------------|----|------------------|----|----------------------|----|---------------------------|
         ///            | Number Window  ||   "4"    |--->|  "0.06975"  |--->|     "0.999999"   |--->|        "-7.411"      |--->|        "7.411"            |
+        ///            |----------------||----------|----|-------------|----|------------------|----|----------------------|----|---------------------------|
         ///            | History window ||  "12+"   |--->| "12+sin(4)" |--->|  "12+cos(sin(4))"|--->|  "12+ln(cos(sin(4)))"|--->| "12+abs(ln(cos(sin(4))))" |
         ///            | ~~~~~~~~~~~~~~~||~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ History window update variables ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-        ///            | OldHist        ||   ""     |--->|   "12+"     |--->|      "12+"       |--->|       "12+"          |--->|        "12+"              |   
+        ///            | OldHist        ||   ""     |--->|   "12+"     |--->|      "12+"       |--->|       "12+"          |--->|        "12+"              |
+        ///            |----------------||----------|----|-------------|----|------------------|----|----------------------|----|---------------------------|
         ///            | MonoString     ||   ""     |--->|  "sin(4)"   |--->|   "cos(sin(4))"  |--->| "ln(cos(sin(4)))"    |--->| "abs(ln(cos(sin(4))))"    |
         ///            --------------------------------------------------------------------------------------------------------------------------------------
         ///   
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-            private void Operations_mono_Clicked(object sender, RoutedEventArgs e)
+        private void Operations_mono_Clicked(object sender, RoutedEventArgs e)
             {
+            if (prev_op.Equals("Res")) History_win.Text = "";
                 Button monoOpButton      =               (Button)sender; // Grabs the button
                 String container_numText =           container_num.Text; // Grabs the number container text
-                String content           = (String)monoOpButton.Content; // Grabs the text from the button
-
+                String operator_         = (String)monoOpButton.Content; // Grabs the text from the button
+                String operand           =                           "";
             
                 if (MonoString.Equals(""))
-                {   
-                
-                    MonoString = content + "(" + container_num.Text + ")"; //  Set the Mono string to be "[Operator](<number_container_value>)" EXAMPLE : "sin(4)"
-                    oldHist    =                         History_win.Text; //  Sets old hist to be the current state of the history container
+                {
+                    operand    = container_num.Text;
+                    oldHist    = History_win.Text; //  Sets old hist to be the current state of the history container
 
 
 
@@ -277,16 +290,18 @@ namespace WpfApp1
                         if (lastHistChar == ')') oldHist += "*";
                 }
 
-                else MonoString = content + "(" + MonoString + ")"; // Define the mono string to be [operation]([monostring]) example cos(sin(4))
+                else operand = MonoString; // Define the mono string to be [operation]([monostring]) example cos(sin(4))
 
 
 
+
+                 MonoString = operator_ + "(" + operand + ")"; //  Set the Mono string to be "[Operator](<number_container_value>)" EXAMPLE : "sin(4)"
 
                 // UPDATE WINDOWS 
                 container_num.Text = (stf.Eval(MonoString)).ToString(); // Send the evaluated string to the number container
                 History_win.Text   =              oldHist + MonoString; // Update history container
 
-
+               
 
                 // SET STATE VARIABLES
                 prev_op = "mono";
@@ -301,44 +316,51 @@ namespace WpfApp1
         ///             1+2
         ///             3*4
         ///             4%5
+        ///     --------------------------------------------------------|                          --------------------------------------------------------
+        ///     |                                                       |                         |                                                     5+|
+        ///     --------------------------------------------------------|  ------ press +  ---->  --------------------------------------------------------|
+        ///     |                                                      5|                         |                                                      5|
+        ///     --------------------------------------------------------|                         --------------------------------------------------------|
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         // When an binomial_operations is clicked modify the window
-            private void Operations_Clicked(object sender, RoutedEventArgs e)
+        private void Operations_Clicked(object sender, RoutedEventArgs e)
             {
-            
-                Button binomButton = (Button)sender;
-                String op = (String)binomButton.Content;// Button Opeartion
-                String container_numText = container_num.Text;// Text from user input
-                String history_winText   = History_win.Text;// Text from history window
+            if (prev_op.Equals("Res")) History_win.Text = "";
+                Button binomButton       =              (Button)sender;
+                String operator_         = (String)binomButton.Content;// Button Opeartion
+                String numContainer      =          container_num.Text;// Text from user input
+                String histContainer     =            History_win.Text;// Text from history window
 
+                char lastHistChar;                          // Defines the last input in history container  
 
-                // If previous operation was a binomial then interpret press as user wanting to change the previous operation.
-                if (prev_op.Equals("Binom"))   history_winText = history_winText.Substring(0, history_winText.Length - 1) + op ;
+                if (History_win.Text.Length > 0) lastHistChar = (History_win.Text)[(History_win.Text).Length - 1];
+                else lastHistChar = ' ';
+
+            // If previous operation was a binomial then interpret press as user wanting to change the previous operation.
+                if (prev_op.Equals("Binom")) histContainer = histContainer.Substring(0, histContainer.Length - 1) + operator_;
+
 
                 else
                 {
-                    // Add operation and container number to the history container
-                    if (MonoString.Equals("")) history_winText += container_numText + op;
 
-                    // MonoStrings selfadd there value to the container in real time. So no need to add container value. [Read more about how they work in monomial operator section]
-                    else
-                    {
-                        history_winText += op;
-                        MonoString = "";
-                    }
+                    // If operand is already represented in source code
+                    if (lastHistChar == ')') histContainer += operator_;
+
+                    // Otherwise
+                    else histContainer += numContainer + operator_;
+
                 }
 
-
                 // UPDATE WINDOWS
-                History_win.Text = history_winText;
+                History_win.Text = histContainer;
 
                 // SET STATE VARIABLES
                 prev_op = "Binom";
-    ;
+                MonoString = "";
 
-            }
+        }
 
 
 
@@ -347,21 +369,27 @@ namespace WpfApp1
         ///     
         ///             - Handles events where :
         ///                 - Right parathesis has been pressed without 
-        ///            
+        ///                 
+        ///     --------------------------------------------------------                           --------------------------------------------------------
+        ///     |                                              5+sin(3)*|                         |                                             5+sin(3)*(|   
+        ///     --------------------------------------------------------|  ------ press (  ---->  --------------------------------------------------------|
+        ///     |                                                      5|                         |                                                      5|
+        ///     --------------------------------------------------------|                         --------------------------------------------------------|     
         ///     INSTRUCTIONS:
         ///         When handling more edge cases. Please add to the switch statement to make the coding easier to read.
         ///
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-            private void Operations_Per_Clicked(object sender, RoutedEventArgs e)
+        private void Operations_Per_Clicked(object sender, RoutedEventArgs e)
             {
-            
-            
+                if (prev_op.Equals("Res")) History_win.Text = "";    
+
+
+                
                 Button x           = (Button)sender;     // Grab button 
                 String content_per = (String) x.Content; // Grab button text
                 char lastInput;                          // Defines the last input in history container  
-
 
 
                 //  Grab the last input [Also check to see if history container is empty.]
@@ -377,15 +405,14 @@ namespace WpfApp1
                     case "(":
                         perCount += 1;
                         if (lastInput==')') History_win.Text += "*(";   // Case 1: Correct for the case where adding a left parathesis after a right parathesis add an implied multiplacation symbol. "18+sin(3)"---> "18+sin(3)*("
-                        else                History_win.Text +=  "(";   // Default
-                        break;
+                            else                History_win.Text +=  "(";   // Default
+                            break;
 
                     case ")":
                         if (perCount > 0)
                         {
                             perCount -= 1;
-
-                            // Case 1 : Avoids closing parathesis where the previous symbol isn't a number/')' - Examples: "12+("---> "12+()"  or "12+(12+"---> "12+(12+)"
+                        // Case 1 : Avoids closing parathesis where the previous symbol isn't a number/')' - Examples: "12+("---> "12+()"  or "12+(12+"---> "12+(12+)"
                             if (!Char.IsDigit(lastInput) && lastInput!=')')
                             {
                                 History_win.Text += container_num.Text + ")";
@@ -405,7 +432,6 @@ namespace WpfApp1
                 MonoString = "";
                 prev_op = "Per";
 
-
             }
 
 
@@ -414,40 +440,47 @@ namespace WpfApp1
         /// <summary>
         ///     DESCRIPTION: Handles the clicking of the results button (=).
         ///     The powerhouse behind this operation is going to be the StringToExpression class which can evaluate expresions.    
-        /// 
+        ///     
+        ///     --------------------------------------------------------                           --------------------------------------------------------
+        ///     |                                              5+sin(3)*|                         |                                            5+sin(3)*5=|   
+        ///     --------------------------------------------------------|  ------ press =  ---->  --------------------------------------------------------|
+        ///     |                                                      5|                         | 5.7056000402993361105037240140405513992346663212613279|
+        ///     --------------------------------------------------------|                         --------------------------------------------------------|
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-            private void Operations_Res_Clicked(object sender, RoutedEventArgs e)
+        private void Operations_Res_Clicked(object sender, RoutedEventArgs e)
             {
 
                 string binomial_operators = "+-/*^%"; // Sets the usual binomial operators used. 
-                String history_winText = History_win.Text; // Grabs the history container text
+                String History_winText = History_win.Text; // Grabs the history container text
                 char lastInput; // Hold last input in history container
 
 
 
                 //  Grab the last input [Also check to see if history container is empty.]
-                    if (History_win.Text.Length > 0)lastInput = (History_win.Text)[(History_win.Text).Length - 1];
+                    if (History_winText.Length > 0)lastInput = (History_winText)[(History_winText).Length - 1];
                     else lastInput = ' ';
          
 
                 // Checks to see if there is a dangling binomial operator in this history container
-                    if (binomial_operators.IndexOf(lastInput)>=0) history_winText += container_num.Text;
+                    if (binomial_operators.IndexOf(lastInput)>=0) History_winText += container_num.Text;
                
 
                 // Closes any open parathesises 
                     while (perCount > 0)
                     {
-                        history_winText += ")";
+                        History_winText += ")";
                         perCount--;
                     }
-            
+
+            // 
+                if(History_winText.Equals("")) History_winText = container_num.Text;
 
 
                 // UPDATE WINDOWS 
-                container_num.Text = stf.Eval(history_winText).ToString(); // Sets the calculator textbox to the temp value 
-                History_win.Text = "";
+                container_num.Text = stf.Eval(History_winText).ToString(); // Sets the calculator textbox to the temp value 
+                History_win.Text = History_winText+"=";
 
                 // CHANGE STATE VARIABLES 
                 prev_op = "Res";
@@ -462,10 +495,15 @@ namespace WpfApp1
 
         /// <summary>
         ///   DESCRIPTION: Clear button operator. Resets Windows back to default and resets the state variables to default.
+        ///     --------------------------------------------------------                           --------------------------------------------------------
+        ///     |                                              5+sin(3)*|                         |                                                       |   
+        ///     --------------------------------------------------------|  ------ press cls  -->  --------------------------------------------------------|
+        ///     |                                                      5|                         |                                                      0|
+        ///     --------------------------------------------------------|                         --------------------------------------------------------|
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-            private void Operations_clr_Clicked(object sender, RoutedEventArgs e)
+        private void Operations_clr_Clicked(object sender, RoutedEventArgs e)
             {
 
 
@@ -500,10 +538,15 @@ namespace WpfApp1
 
         /// <summary>
         /// DESCIPTION: Allows users to back track the inputs being entered in the number container, WHILST TYPING IN NUMBERS. If the number container contains a result from calculations it clears the container.
+        ///     --------------------------------------------------------                           --------------------------------------------------------
+        ///     |                                              5+sin(3)*|                         |                                              5+sin(3)*|
+        ///     --------------------------------------------------------|  ------ press DEL  -->  --------------------------------------------------------|
+        ///     |                                                    543|                         |                                                     54|
+        ///     --------------------------------------------------------|                         --------------------------------------------------------|
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-            private void Operation_del_Click(object sender, RoutedEventArgs e)
+        private void Operation_del_Click(object sender, RoutedEventArgs e)
             {
                 // Hold last input in history container
                 char lastIn;
