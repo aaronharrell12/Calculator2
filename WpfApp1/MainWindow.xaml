@@ -12,7 +12,7 @@
     <!-- Style -->
     <Window.Resources>
 
-        <!--Buttons-->
+        <!--Buttons [Requirement 3.5.1]-->
         <Style TargetType="Button" x:Key="but_style">
             <Setter Property="BorderBrush"      Value="Transparent"                   />
             <Setter Property="FontFamily"       Value="Fonts/Roboto-Light.ttf #Roboto"  />
@@ -72,11 +72,13 @@
 
         </Grid>
 
-        <!-- Top Panel -->
+        <!-- Top Panel (Requirments:  3.3 -->
         <Grid Name="Top" 
-                  Grid.Row="0"
-                  VerticalAlignment="Top"
-                  Height="40" Grid.ColumnSpan="2" Grid.RowSpan="2"
+              Grid.Row="0"
+              VerticalAlignment="Top"
+              Height="40" 
+              Grid.ColumnSpan="2" 
+              Grid.RowSpan="2"
                   >
 
             <!--Grid Columns-->
@@ -146,7 +148,7 @@
                        />
             </Grid>
 
-            <!-- Menu Toggle Button -->
+            <!-- Menu Toggle Button [Requirement 3.3.2]  -->
             <ToggleButton x:Name="Tg_Btn" 
                           Height="40"
                           Width ="40"
@@ -187,7 +189,7 @@
 
                 </ToggleButton.Style>
 
-                <!-- Button Animations -->
+                <!-- Button Animations [Requirement 3.3.2.1] -->
                 <ToggleButton.Triggers>
 
                     <!-- Open the menu -->
@@ -204,7 +206,7 @@
                                         From="420" To="520"
                                         Duration="0:0:0.17"/>
 
-                                <!-- Expand -->
+                                <!-- Expand [Requirement 3.42]-->
                                 <DoubleAnimation
                                     
                                         Storyboard.TargetName="nav_pan"
@@ -214,7 +216,7 @@
                                         From="0" To="100"
                                         Duration="0:0:0.17"/>
 
-                                <!-- Navigational Panel -->
+                                <!-- Navigational Panel [Requirement 3.42] -->
                                 <DoubleAnimation
                                         Storyboard.TargetName="nav_pan"
                                         Storyboard.TargetProperty="Opacity"
@@ -308,7 +310,7 @@
                         <BeginStoryboard>
                             <Storyboard x:Name="Show">
 
-
+                                
                                 <!-- Shorten the width of the window -->
                                 <DoubleAnimation
                                     
@@ -319,7 +321,7 @@
                                         From="520" To="420"
                                         Duration="0:0:0.17"/>
 
-                                <!-- Shorten the width of the navigational panel -->
+                                <!-- Shorten the width of the navigational panel [Requirement 3.42] -->
                                 <DoubleAnimation
                                         Storyboard.TargetName="nav_pan"
                                         Storyboard.TargetProperty="Width"
@@ -328,7 +330,7 @@
                                         From="100" To="0"
                                         Duration="0:0:0.17"/>
 
-                                <!-- Change opacity of navigational panel -->
+                                <!-- Change opacity of navigational panel [Requirement 3.42]-->
                                 <DoubleAnimation
                                         Storyboard.TargetName="nav_pan"
                                         Storyboard.TargetProperty="Opacity"
@@ -428,7 +430,9 @@
         <Grid x:Name="Calculator" 
               HorizontalAlignment="Right"
               Width="400"
-              ShowGridLines="False" Grid.ColumnSpan="2" Grid.RowSpan="2"
+              ShowGridLines="False" 
+              Grid.ColumnSpan="2" 
+              Grid.RowSpan="2"
               >
 
             <!-- Grid Row-->
@@ -467,7 +471,7 @@
 
             </Grid>
 
-            <!-- NUMBERS AND OPERATION GRID -->
+            <!-- NUMBERS AND OPERATION GRID [Requirement 3.5]-->
             <Grid x:Name="grid"   
                    Grid.Row="4" 
                    Grid.Column="1" >
@@ -491,7 +495,7 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
 
-                <!--Grid Objects-->
+                <!--Grid Objects [Requirement 3.52]-->
                 <Button x:Name="Number_0"               Content="0" Tag="0" Grid.Row="5" Grid.Column="2" Style="{StaticResource but_style}" />
                 <Button x:Name="Number_1"               Content="1"         Grid.Row="4" Grid.Column="1" Style="{StaticResource but_style}" />
                 <Button x:Name="Number_2"               Content="2"         Grid.Row="4" Grid.Column="2" Style="{StaticResource but_style}" />

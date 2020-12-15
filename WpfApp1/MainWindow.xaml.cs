@@ -52,6 +52,7 @@ namespace WpfApp1
             // --------------- (Bind all buttons to a function based off of name)-------------------------------
             /*
              * 
+             * 
                 EXPLAINATION OF BINDING CODE
                 ---------------------------------------------------------------------------------
                 Naming conventions of buttons are (View XAML Code for all the names):
@@ -130,6 +131,7 @@ namespace WpfApp1
 
 
         /// <summary>
+        ///     (Requirements 1.1,2.1)
         ///     Function 
         ///     DESCRIPTION:  Adds a digit/decimal to the number window.
         ///     --------------------------------------------------------|                             --------------------------------------------------------
@@ -153,7 +155,7 @@ namespace WpfApp1
                 if ( !(numberValue).Equals(".") || !textIn.Contains(".") )
                 {
                     // Clears number container under a couple different scenarios
-                    if (textIn.Equals("0") || prev_op.Equals("Res") || prev_op.Equals("Binom") || prev_op.Equals("Clr") || prev_op.Equals("Constant")||!MonoString.Equals(""))
+                    if (textIn.Equals("0") || !prev_op.Equals("Num"))
                     {
                         if((numberValue).Equals(".")) container_num.Text = "0"+ numberValue;
                         else                          container_num.Text = numberValue;
@@ -166,7 +168,7 @@ namespace WpfApp1
 
                 // SETS STATE VARIABLES
                 res_op              =  false;
-                prev_op             =  "num";
+                prev_op             =  "Num";
             
                 MonoString          =     "";
           
@@ -176,6 +178,7 @@ namespace WpfApp1
 
 
         /// <summary>
+        ///     (Requirements 1.6,2.5)
         ///     DESCRIPTION: Handles constant inputs like 
         ///         - e 
         ///         - pi
@@ -207,12 +210,13 @@ namespace WpfApp1
                         break;
                 }
 
+                //----------------------UPDATE CONTAINERS-----------------------------
                 // Adds num to the containeer
                 container_num.Text = num;
 
 
 
-                // SET STATE VARIABLES
+                //-----------------------SET STATE VARIABLES-----------------------------
                 prev_op    = "Constant";
                 MonoString =         "";
             }
@@ -220,7 +224,7 @@ namespace WpfApp1
 
 
         /// <summary>
-        ///   
+        ///    (Requirements: 1.3, 2.3)
         ///     DESCRIPTION: This is a handler for monomial button operators. 
         ///     
         ///     DESIGN:
@@ -297,19 +301,21 @@ namespace WpfApp1
 
                  MonoString = operator_ + "(" + operand + ")"; //  Set the Mono string to be "[Operator](<number_container_value>)" EXAMPLE : "sin(4)"
 
-                // UPDATE WINDOWS 
+                //--------------------------- UPDATE CONTAINERS ---------------------------------
+               
                 container_num.Text = (stf.Eval(MonoString)).ToString(); // Send the evaluated string to the number container
                 History_win.Text   =              oldHist + MonoString; // Update history container
 
                
 
-                // SET STATE VARIABLES
+                //---------------------------SET STATE VARIABLES-----------------------------
                 prev_op = "mono";
 
 
             }
 
         /// <summary>
+        ///     ( Requirements: 1.2, 2.2)
         ///     DESCRIPTION: This handles binomial operations (operations that take in two inputs)
         ///     
         ///     Examples: 
@@ -332,15 +338,14 @@ namespace WpfApp1
                 String operator_         = (String)binomButton.Content;// Button Opeartion
                 String numContainer      =          container_num.Text;// Text from user input
                 String histContainer     =            History_win.Text;// Text from history window
+                char lastHistChar;                                     // Defines the last input in history container  
 
-                char lastHistChar;                          // Defines the last input in history container  
-
+                // Grab the last character from the history container
                 if (History_win.Text.Length > 0) lastHistChar = (History_win.Text)[(History_win.Text).Length - 1];
-                else lastHistChar = ' ';
+                else                             lastHistChar = ' ';
 
             // If previous operation was a binomial then interpret press as user wanting to change the previous operation.
                 if (prev_op.Equals("Binom")) histContainer = histContainer.Substring(0, histContainer.Length - 1) + operator_;
-
 
                 else
                 {
@@ -365,6 +370,7 @@ namespace WpfApp1
 
 
         /// <summary>
+        ///     Requirments(1.8,2.6,2.61,2.62,2.63)
         ///     DESCRIPTIONS: Handles clicks on the parathesis buttons (left and right). 
         ///     
         ///             - Handles events where :
@@ -405,7 +411,7 @@ namespace WpfApp1
                     case "(":
                         perCount += 1;
                         if (lastInput==')') History_win.Text += "*(";   // Case 1: Correct for the case where adding a left parathesis after a right parathesis add an implied multiplacation symbol. "18+sin(3)"---> "18+sin(3)*("
-                            else                History_win.Text +=  "(";   // Default
+                            else            History_win.Text +=  "(";   // Default
                             break;
 
                     case ")":
@@ -438,6 +444,7 @@ namespace WpfApp1
 
 
         /// <summary>
+        ///     (Requirements 1.8, 2.7)
         ///     DESCRIPTION: Handles the clicking of the results button (=).
         ///     The powerhouse behind this operation is going to be the StringToExpression class which can evaluate expresions.    
         ///     
@@ -452,40 +459,50 @@ namespace WpfApp1
         private void Operations_Res_Clicked(object sender, RoutedEventArgs e)
             {
 
-                string binomial_operators = "+-/*^%"; // Sets the usual binomial operators used. 
-                String History_winText = History_win.Text; // Grabs the history container text
-                char lastInput; // Hold last input in history container
+                string binomial_operators =        "+-/*^%("; // Sets the usual binomial operators used. 
+                String History_winText    = History_win.Text; // Grabs the history container text
+                char lastHistChar;                            // Hold last input in history container
 
 
 
-                //  Grab the last input [Also check to see if history container is empty.]
-                    if (History_winText.Length > 0)lastInput = (History_winText)[(History_winText).Length - 1];
-                    else lastInput = ' ';
+                //   Last character in the history window is defined.
+                    if (History_winText.Length > 0) lastHistChar = (History_winText)[(History_winText).Length - 1];
+                    else lastHistChar = ' ';
          
 
-                // Checks to see if there is a dangling binomial operator in this history container
-                    if (binomial_operators.IndexOf(lastInput)>=0) History_winText += container_num.Text;
+                // Edge Case: Dangling binomial operator or open/empty left parenthesis
+                    if (binomial_operators.IndexOf(lastHistChar) >=0) History_winText += container_num.Text;
                
 
-                // Closes any open parathesises 
+                // Edge Case: When parethesis aren't closed. 
                     while (perCount > 0)
                     {
                         History_winText += ")";
                         perCount--;
                     }
+                // Edge Case: When history container is zero
+                    if(History_winText.Equals("") ) History_winText = container_num.Text;
 
-            // 
-                if(History_winText.Equals("")) History_winText = container_num.Text;
+
+            //---------------------------------- UPDATE CONTAINERS ----------------------------------
+            if (!prev_op.Equals("Res")) // First time click (=)
+            {
+                if (   History_winText.Equals("NaN") 
+                    && History_winText.Equals("∞") 
+                    && History_winText.Equals("-∞") ) 
+                     container_num.Text =                      History_winText;              // Edge case: Infinity and null in the result window
+                else container_num.Text = stf.Eval(History_winText).ToString();              // Default Case:  evaluates history expression
 
 
-                // UPDATE WINDOWS 
-                container_num.Text = stf.Eval(History_winText).ToString(); // Sets the calculator textbox to the temp value 
-                History_win.Text = History_winText+"=";
+                History_win.Text        = History_winText + "=";                             // Adds and equal sign on the end of the history container.
+            }
+            else History_win.Text       = History_winText;                                   // Repeatedly clicking the result buttons should span the same results
+            
 
-                // CHANGE STATE VARIABLES 
-                prev_op = "Res";
-                res_op = true;
-                MonoString = "";
+            //-------------------------------CHANGE STATE VARIABLES --------------------------------
+                prev_op    = "Res";
+                res_op     =  true;
+                MonoString =    "";
             }
 
 
@@ -494,6 +511,7 @@ namespace WpfApp1
 
 
         /// <summary>
+        ///     (Requirements: 1.4)
         ///   DESCRIPTION: Clear button operator. Resets Windows back to default and resets the state variables to default.
         ///     --------------------------------------------------------                           --------------------------------------------------------
         ///     |                                              5+sin(3)*|                         |                                                       |   
@@ -507,7 +525,7 @@ namespace WpfApp1
             {
 
 
-                // UPDATE WINDOWS
+                //----------------------UPDATE CONTAINERS-------------------------------
                 container_num.Text = "0";
                 History_win.Text = "";
 
@@ -537,6 +555,7 @@ namespace WpfApp1
 
 
         /// <summary>
+        ///     (Requirements: 1.5, 2.4, 2.41, 2.42 )
         /// DESCIPTION: Allows users to back track the inputs being entered in the number container, WHILST TYPING IN NUMBERS. If the number container contains a result from calculations it clears the container.
         ///     --------------------------------------------------------                           --------------------------------------------------------
         ///     |                                              5+sin(3)*|                         |                                              5+sin(3)*|
@@ -558,7 +577,7 @@ namespace WpfApp1
                 else lastIn = ' ';
      
                 // Checks to see if the user is typing in numbers.
-                if (prev_op.Equals("num"))
+                if (prev_op.Equals("Num"))
                 {
 
                     // Checks to see if user is at the "end" of the deleting process and the container can be reset. 
