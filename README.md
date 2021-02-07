@@ -1,1 +1,5 @@
-# Calculator2
+# Calculator
+
+This is a basic calculator application made using windows wpf.
+
+
