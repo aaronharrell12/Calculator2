@@ -11,6 +11,7 @@ This is a basic calculator application made using windows wpf.
 
 ## Application Screenshot
 
-![Simple Calculator](https://user-images.githubusercontent.com/18093319/109456818-3d8a9800-7a1f-11eb-9743-67a799a03a3e.png)
+![ne](https://user-images.githubusercontent.com/18093319/110239147-2e1dba00-7f0b-11eb-86c9-485254ff36ab.gif)
+
 
 
