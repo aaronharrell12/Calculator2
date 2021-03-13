@@ -7,7 +7,12 @@
         Name="window"
         ResizeMode="NoResize"
         mc:Ignorable="d"
-        Title="Calculator" Height="575" Width="408" BorderBrush="White" Foreground="White" Background="White">
+        Title="Calculator" 
+        Height="575" 
+        Width="408" 
+        BorderBrush="White" 
+        Foreground="White" 
+        Background="White">
 
     <!-- Style -->
     <Window.Resources>
@@ -170,19 +175,19 @@
                                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                                     <Border BorderBrush="{TemplateBinding BorderBrush}" 
                                             Background="{TemplateBinding Background}">
-                                        
+
                                         <ContentPresenter HorizontalAlignment="Center"                  
                                                             VerticalAlignment="Center"/>
-                                        
+
                                     </Border>
                                 </ControlTemplate>
                             </Setter.Value>
                         </Setter>
                         <Style.Triggers>
                             <Trigger Property="IsChecked" Value="True">
-                                
+
                                 <Setter Property="Background" Value="Red" />
-                                
+
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -310,7 +315,7 @@
                         <BeginStoryboard>
                             <Storyboard x:Name="Show">
 
-                                
+
                                 <!-- Shorten the width of the window -->
                                 <DoubleAnimation
                                     
@@ -508,23 +513,39 @@
                 <Button x:Name="Number_9"               Content="9"         Grid.Row="2" Grid.Column="3" Style="{StaticResource but_style}" />
                 <Button x:Name="Number_dec"             Content="."         Grid.Row="5" Grid.Column="3" Style="{StaticResource but_style}" />
                 <Button x:Name="Constant_e"             Content="e"         Grid.Row="0" Grid.Column="2" Style="{StaticResource but_style}" />
-                <Button x:Name="Constant_pi"            Content="pi"        Grid.Row="0" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Constant_pi"            Content="pi"        Grid.Row="0" Grid.Column="1" Style="{StaticResource but_style}" Foreground="{x:Null}" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="pi5.png"/>
+                    </Button.Background>
+                </Button>
                 <Button x:Name="Operation_Result_eql"   Content="="         Grid.Row="5" Grid.Column="5" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Bin_mod"      Content="%"         Grid.Row="0" Grid.Column="0" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Bin_add"      Content="+"         Grid.Row="4" Grid.Column="4" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Bin_sub"      Content="-"         Grid.Row="3" Grid.Column="4" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Bin_mul"      Content="*"         Grid.Row="2" Grid.Column="4" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Bin_div"      Content="/"         Grid.Row="1" Grid.Column="4" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_Bin_exp"      Content="^"         Grid.Row="1" Grid.Column="0" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Bin_exp"      Content="^"         Grid.Row="1" Grid.Column="0" Style="{StaticResource but_style}" Foreground="{x:Null}" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="exponent.png"/>
+                    </Button.Background>
+                </Button>
                 <Button x:Name="Operation_Mon_log"      Content="log"       Grid.Row="4" Grid.Column="0" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Mon_sin"      Content="sin"       Grid.Row="3" Grid.Column="0" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Mon_cos"      Content="cos"       Grid.Row="2" Grid.Column="0" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Mon_ln"       Content="ln"        Grid.Row="5" Grid.Column="0" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_Mon_abs"      Content="abs"       Grid.Row="1" Grid.Column="3" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_Mon_neg"      Content="neg"       Grid.Row="5" Grid.Column="1" Style="{StaticResource but_style}" />
+                <Button x:Name="Operation_Mon_abs"      Content="abs"       Grid.Row="1" Grid.Column="3" Style="{StaticResource but_style}" Foreground="{x:Null}" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="abs.png"/>
+                    </Button.Background>
+                </Button>
+                <Button x:Name="Operation_Mon_neg"      Content="neg"       Grid.Row="5" Grid.Column="1" Style="{StaticResource but_style}" Foreground="{x:Null}" >
+                    <Button.Background>
+                        <ImageBrush ImageSource="plusminus.png"/>
+                    </Button.Background>
+                </Button>
                 <Button x:Name="Operation_Per_left"     Content="("         Grid.Row="1" Grid.Column="1" Style="{StaticResource but_style}" />
                 <Button x:Name="Operation_Per_right"    Content=")"         Grid.Row="1" Grid.Column="2" Style="{StaticResource but_style}" />
-                <Button x:Name="Operation_del"          Content="del"       Grid.Row="0" Grid.Column="4" Style="{StaticResource but_style}" Click="Operation_del_Click" />
+                <Button x:Name="Operation_del"          Content="del"       Grid.Row="0" Grid.Column="4" Style="{StaticResource but_style}"  />
                 <Button x:Name="Operation_clr"          Content="clr"       Grid.Row="0" Grid.Column="3" Style="{StaticResource but_style}" />
 
             </Grid>

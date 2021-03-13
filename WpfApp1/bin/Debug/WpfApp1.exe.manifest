@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WpfApp1.exe" size="43512">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WpfApp1.exe" size="47608">
       <assemblyIdentity name="WpfApp1" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>t6/D7X9ADPGiXOWLf09rbtBtc3XOekbC9EkyCx0SrWM=</dsig:DigestValue>
+        <dsig:DigestValue>w40iYoMPVdyJtRowAa1SV9AIhFoyGA4XjClLnNV3+Lk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

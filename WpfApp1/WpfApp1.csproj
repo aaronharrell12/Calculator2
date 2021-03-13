@@ -177,5 +177,20 @@
   <ItemGroup>
     <Resource Include="9739889771543238875-128.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bitmap1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="abs.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="exponent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="plusminus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pi5.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
